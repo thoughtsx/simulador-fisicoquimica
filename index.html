@@ -137,16 +137,12 @@
     .interpretation ul { margin: 8px 0 0; padding-left: 20px; }
     .interpretation li { margin: 4px 0; }
 
-    .code-layout { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 18px; align-items: start; }
-    pre { margin: 0; white-space: pre-wrap; word-break: break-word; border-radius: 18px; padding: 18px; background: #0f172a; color: #e0f2fe; border: 1px solid rgba(255,255,255,0.16); overflow-x: auto; line-height: 1.55; font-size: 0.88rem; }
-    code { font-family: Consolas, Monaco, 'Courier New', monospace; }
-
     .footer { color: rgba(255,255,255,0.75); text-align: center; padding: 22px 0 40px; font-size: 0.9rem; }
     .hidden { display: none !important; }
 
     @media (max-width: 1000px) {
       .tabs { grid-template-columns: repeat(3, 1fr); }
-      .hero-grid, .workspace, .code-layout { grid-template-columns: 1fr; }
+      .hero-grid, .workspace { grid-template-columns: 1fr; }
       .result-grid { grid-template-columns: repeat(2, 1fr); }
       .topbar { border-radius: 24px; align-items: flex-start; flex-direction: column; }
       .nav-links { justify-content: flex-start; }
@@ -180,7 +176,6 @@
           <a href="#adiabatico">Adiabático</a>
           <a href="#isocorico">Isocórico</a>
           <a href="#isobarico">Isobárico</a>
-          <a href="#codigo">Código</a>
         </nav>
       </div>
 
@@ -206,7 +201,7 @@
             <div class="metric"><strong>5</strong><span>Módulos unidos</span></div>
             <div class="metric"><strong>101.325</strong><span>L·atm a Joules</span></div>
             <div class="metric"><strong>Cp, Cv</strong><span>Tabla del sistema</span></div>
-            <div class="metric"><strong>Código</strong><span>Visible en pantalla</span></div>
+            <div class="metric"><strong>Interpretación</strong><span>Resultados explicados</span></div>
           </div>
         </aside>
       </div>
@@ -220,7 +215,6 @@
       <button class="tab-btn" type="button" data-tab="adiabatico">Adiabático</button>
       <button class="tab-btn" type="button" data-tab="isocorico">Isocórico</button>
       <button class="tab-btn" type="button" data-tab="isobarico">Isobárico</button>
-      <button class="tab-btn" type="button" data-tab="codigo">Código</button>
     </div>
 
     <section class="section active" id="calorimetria">
@@ -341,14 +335,6 @@
         <div class="visual-card"><div class="card"><h4>Resultados e interpretación</h4><div class="result-grid"><div class="result-tile blue"><span>W_pres</span><strong id="isobaricWpres">--</strong></div><div class="result-tile purple"><span>W_vol</span><strong id="isobaricWvol">--</strong></div><div class="result-tile"><span>ΔU</span><strong id="isobaricDU">--</strong></div><div class="result-tile"><span>ΔH</span><strong id="isobaricDH">--</strong></div><div class="result-tile good"><span>Q</span><strong id="isobaricQ">--</strong></div><div class="result-tile orange"><span>ΔV</span><strong id="isobaricDV">--</strong></div></div><div class="interpretation" style="margin-top: 14px;" id="isobaricInterpretacion">Calcula para ver qué implica cada resultado.</div></div><div class="card" id="reporte"><h4>Guardar resultados</h4><div class="form-grid"><div class="field"><label for="estudiante">Nombre del estudiante</label><input id="estudiante" type="text" placeholder="Escribe tu nombre" /></div><div class="field" style="display:flex; align-items:flex-end;"><button class="btn btn-primary" type="button" style="width:100%;" onclick="imprimirReporte()">Imprimir / guardar PDF</button></div></div></div></div>
       </div>
     </section>
-
-    <section class="section" id="codigo">
-      <div class="section-title"><div><h3>Código y fórmulas visibles</h3><p>Esta sección está puesta para que el docente pueda revisar directamente las reglas de cálculo usadas por el simulador.</p></div><span class="pill">HTML + CSS + JavaScript</span></div>
-      <div class="code-layout">
-        <div class="card"><h4>Reglas implementadas</h4><div class="interpretation"><ul><li><strong>Presión:</strong> se ingresa en atm.</li><li><strong>Volumen:</strong> se ingresa en L.</li><li><strong>Conversión:</strong> P·V en L·atm se convierte a J multiplicando por 101.325.</li><li><strong>Signo:</strong> expansión del sistema → trabajo de volumen negativo.</li><li><strong>Cp y Cv:</strong> salen de la tabla del gas seleccionada.</li></ul></div><div class="table-wrap" style="margin-top:14px;"><table><thead><tr><th>Gas</th><th>Cv</th><th>Cp</th><th>γ</th></tr></thead><tbody id="tablaGases"></tbody></table></div></div>
-        <pre><code id="codigoVisible"></code></pre>
-      </div>
-    </section>
   </main>
 
   <footer class="footer">Interfaz unificada para GitHub Pages · HTML, CSS y JavaScript puro</footer>
@@ -396,7 +382,7 @@
     document.querySelectorAll('.nav-links a').forEach((link) => {
       link.addEventListener('click', (event) => {
         const tabId = link.getAttribute('href').replace('#', '');
-        if (['calorimetria', 'isotermico', 'adiabatico', 'isocorico', 'isobarico', 'codigo'].includes(tabId)) {
+        if (['calorimetria', 'isotermico', 'adiabatico', 'isocorico', 'isobarico'].includes(tabId)) {
           event.preventDefault(); activarTab(tabId); $('laboratorio').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
@@ -548,40 +534,6 @@
       const win = window.open('', '_blank'); win.document.write(html); win.document.close(); win.focus(); win.print();
     }
 
-    function mostrarCodigo() {
-      $('codigoVisible').textContent = `// Conversión general
-const L_ATM_TO_J = 101.325;
-
-// Isotérmico, T constante
-W_rev = -n * R_J * T * Math.log(Vf / Vi);
-W_irr = -Pf * (Vf - Vi) * L_ATM_TO_J;
-Q = -W;
-Delta_U = 0;
-Delta_H = 0;
-
-// Adiabático, Q = 0
-Tf = Ti * Math.pow(Vi / Vf, gamma - 1);
-Pf = Pi * Math.pow(Vi / Vf, gamma);
-Delta_U = n * Cv * (Tf - Ti);
-Delta_H = n * Cp * (Tf - Ti);
-Q = 0;
-W = Delta_U;
-
-// Isocórico, V constante
-W_vol = 0;
-W_pres = V * (Pf - Pi) * L_ATM_TO_J;
-Delta_U = n * Cv * (Tf - Ti);
-Delta_H = n * Cp * (Tf - Ti);
-Q = Delta_U;
-
-// Isobárico, P constante
-W_pres = 0;
-W_vol = -P * (Vf - Vi) * L_ATM_TO_J;
-Delta_U = n * Cv * (Tf - Ti);
-Delta_H = n * Cp * (Tf - Ti);
-Q = Delta_H;`;
-    }
-
     ['tipoEntrada', 'molesIso', 'tempIso', 'piIso', 'pfIso', 'viIso', 'vfIso'].forEach((id) => { $(id).addEventListener('input', sincronizarIso); $(id).addEventListener('change', id === 'tipoEntrada' ? actualizarEntradaIso : sincronizarIso); });
     $('material').addEventListener('change', actualizarMaterial);
     $('gasAdi').addEventListener('change', () => { actualizarGasAdiabatico(); simularAdiabatico(); });
@@ -594,7 +546,7 @@ Q = Delta_H;`;
     $('isobaricForm').addEventListener('submit', (event) => { event.preventDefault(); calcularIsobarico(); });
 
     window.addEventListener('resize', () => { if (ultimoIso) dibujarIsotermico(ultimoIso); if (ultimoAdi) dibujarAdiabatico(ultimoAdi); });
-    window.addEventListener('DOMContentLoaded', () => { poblarGases(); mostrarCodigo(); actualizarMaterial(); actualizarEntradaIso(); calcularCalorimetria(); simularIsotermico(); simularAdiabatico(); calcularIsocorico(); calcularIsobarico(); const hash = location.hash.replace('#', ''); if (['calorimetria', 'isotermico', 'adiabatico', 'isocorico', 'isobarico', 'codigo'].includes(hash)) activarTab(hash); });
+    window.addEventListener('DOMContentLoaded', () => { poblarGases(); actualizarMaterial(); actualizarEntradaIso(); calcularCalorimetria(); simularIsotermico(); simularAdiabatico(); calcularIsocorico(); calcularIsobarico(); const hash = location.hash.replace('#', ''); if (['calorimetria', 'isotermico', 'adiabatico', 'isocorico', 'isobarico'].includes(hash)) activarTab(hash); });
   </script>
 </body>
 </html>
