@@ -129,6 +129,15 @@
     .lab-object { min-height: 250px; border-radius: 22px; background: radial-gradient(circle at 50% 28%, rgba(14,165,233,0.22), transparent 34%), linear-gradient(160deg, #eff6ff, #f8fafc); border: 1px solid #dbeafe; position: relative; overflow: hidden; display: grid; place-items: center; padding: 22px; }
     .calor-illustration { width: min(100%, 420px); display: block; filter: drop-shadow(0 16px 28px rgba(15, 23, 42, 0.18)); border-radius: 24px; background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(241,245,249,0.95)); border: 1px solid rgba(148, 163, 184, 0.3); }
     .image-caption { margin-top: 12px; text-align: center; color: var(--muted); font-size: 0.95rem; max-width: 420px; }
+    .lab-object.reacting { box-shadow: 0 0 0 3px rgba(14,165,233,0.08) inset; }
+    .lab-object.reacting::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 22% 78%, rgba(125,211,252,0.85) 0 9px, transparent 10px), radial-gradient(circle at 34% 62%, rgba(147,197,253,0.8) 0 10px, transparent 11px), radial-gradient(circle at 48% 84%, rgba(186,230,253,0.85) 0 8px, transparent 9px), radial-gradient(circle at 63% 68%, rgba(191,219,254,0.82) 0 11px, transparent 12px), radial-gradient(circle at 76% 80%, rgba(125,211,252,0.82) 0 8px, transparent 9px); animation: bubbleRise 1.6s ease-in-out forwards; pointer-events: none; opacity: 0; }
+    .lab-object.reacting::after { content: "Intercambio de calor en proceso"; position: absolute; top: 16px; right: 18px; padding: 8px 12px; border-radius: 999px; background: rgba(15, 23, 42, 0.84); color: #f8fafc; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.02em; animation: badgePulse 1.6s ease-in-out forwards; pointer-events: none; opacity: 0; }
+    .lab-object.reacting .calor-illustration { animation: calorPulse 1.6s ease-in-out; }
+    .lab-object.reacting .image-caption { color: #0c4a6e; font-weight: 700; }
+    .btn.is-calculating { pointer-events: none; transform: translateY(-1px) scale(1.01); box-shadow: 0 18px 36px rgba(14,165,233,0.34); }
+    @keyframes calorPulse { 0% { transform: scale(1); filter: drop-shadow(0 16px 28px rgba(15,23,42,0.18)); } 25% { transform: scale(1.02) rotate(-1deg); filter: drop-shadow(0 22px 34px rgba(14,165,233,0.28)); } 50% { transform: scale(1.03) rotate(1deg); filter: drop-shadow(0 26px 40px rgba(34,197,94,0.28)); } 100% { transform: scale(1); filter: drop-shadow(0 16px 28px rgba(15,23,42,0.18)); } }
+    @keyframes bubbleRise { 0% { opacity: 0; transform: translateY(26px) scale(0.9); } 20% { opacity: 1; } 100% { opacity: 0; transform: translateY(-90px) scale(1.08); } }
+    @keyframes badgePulse { 0% { opacity: 0; transform: translateY(-8px) scale(0.95); } 20% { opacity: 1; transform: translateY(0) scale(1); } 80% { opacity: 1; } 100% { opacity: 0; transform: translateY(-6px) scale(1.02); } }
 
     .note { margin: 0; padding: 14px 16px; border-radius: 16px; background: #fff7ed; border: 1px solid #fed7aa; color: #9a3412; line-height: 1.55; font-size: 0.93rem; }
     .formula { margin: 12px 0 0; padding: 14px; border-radius: 16px; background: #f8fafc; border: 1px dashed #cbd5e1; font-weight: 800; color: #334155; overflow-x: auto; line-height: 1.7; }
@@ -243,7 +252,7 @@
             <div class="field"><label for="calorMaterial">Calor específico del material (J/kg·°C)</label><input id="calorMaterial" type="number" readonly /></div>
             <div class="field"><label for="calorAguaInput">Calor específico del agua (J/kg·°C)</label><input id="calorAguaInput" type="number" value="4186" readonly /></div>
           </div>
-          <div class="button-row"><button class="btn btn-primary" type="submit">Calcular</button><button class="btn btn-outline" type="button" onclick="reiniciarCalorimetria()">Reiniciar</button></div>
+          <div class="button-row"><button class="btn btn-primary" id="btnCalorimetria" type="submit">Calcular</button><button class="btn btn-outline" type="button" onclick="reiniciarCalorimetria()">Reiniciar</button></div>
         </form>
 
         <div class="visual-card">
@@ -346,6 +355,8 @@
     const L_ATM_TO_J = 101.325;
 
     const materiales = { Aluminio: 900, Cobre: 386, Hierro: 452, Oro: 126, Plata: 233, Zinc: 388, Carbono: 710, Azufre: 710, Fosforo: 769, Yodo: 145 };
+    const simbolosMateriales = { Aluminio: 'Al', Cobre: 'Cu', Hierro: 'Fe', Oro: 'Au', Plata: 'Ag', Zinc: 'Zn', Carbono: 'C', Azufre: 'S', Fosforo: 'P', Yodo: 'I' };
+    const coloresMateriales = { Aluminio: ['#e2e8f0', '#94a3b8'], Cobre: ['#f59e0b', '#b45309'], Hierro: ['#cbd5e1', '#64748b'], Oro: ['#fef08a', '#eab308'], Plata: ['#f8fafc', '#94a3b8'], Zinc: ['#dbeafe', '#60a5fa'], Carbono: ['#9ca3af', '#1f2937'], Azufre: ['#fde047', '#ca8a04'], Fosforo: ['#fdba74', '#ea580c'], Yodo: ['#c4b5fd', '#6d28d9'] };
 
     const gases = {
       monoatomico: { nombre: 'Gas monoatómico ideal', cv: 12.47, cp: 20.79 },
@@ -404,21 +415,45 @@
 
     function generarSvgCalor(material, ti1, ti2, tf) {
       const materialLimpio = material === 'Fosforo' ? 'Fósforo' : material;
-      const inicialMaterial = materialLimpio.charAt(0).toUpperCase();
+      const simbolo = simbolosMateriales[material] || materialLimpio.charAt(0).toUpperCase();
+      const paleta = coloresMateriales[material] || ['#fde68a', '#f59e0b'];
       const tMat = Number.isFinite(ti1) ? `${ti1.toFixed(1)} °C` : '--';
       const tAgua = Number.isFinite(ti2) ? `${ti2.toFixed(1)} °C` : '--';
       const tFinal = Number.isFinite(tf) ? `${tf.toFixed(2)} °C` : 'Pendiente';
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 620"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f8fbff"/><stop offset="100%" stop-color="#e2ecff"/></linearGradient><linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#60a5fa" stop-opacity="0.90"/><stop offset="100%" stop-color="#2563eb" stop-opacity="0.98"/></linearGradient><linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde68a"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect width="820" height="620" rx="30" fill="url(#bg)"/><text x="410" y="62" text-anchor="middle" font-size="30" font-family="Segoe UI, Arial" font-weight="700" fill="#0f172a">Experimento de calorimetría</text><text x="410" y="100" text-anchor="middle" font-size="18" font-family="Segoe UI, Arial" fill="#475569">${materialLimpio} en agua dentro de un sistema aislado</text><rect x="145" y="180" width="530" height="300" rx="26" fill="#ffffff" stroke="#94a3b8" stroke-width="6"/><rect x="175" y="270" width="470" height="180" rx="18" fill="url(#water)"/><path d="M190 286 C 280 256, 360 302, 455 278 C 545 254, 605 290, 635 274" fill="none" stroke="#dbeafe" stroke-width="10" stroke-linecap="round" opacity="0.8"/><rect x="325" y="205" width="170" height="110" rx="20" fill="url(#metal)" stroke="#b45309" stroke-width="5"/><text x="410" y="252" text-anchor="middle" font-size="48" font-family="Segoe UI, Arial" font-weight="800" fill="#7c2d12">${inicialMaterial}</text><text x="410" y="286" text-anchor="middle" font-size="18" font-family="Segoe UI, Arial" fill="#7c2d12">${materialLimpio}</text><circle cx="620" cy="188" r="42" fill="#fee2e2" stroke="#ef4444" stroke-width="5"/><text x="620" y="195" text-anchor="middle" font-size="17" font-family="Segoe UI, Arial" font-weight="700" fill="#b91c1c">${tMat}</text><text x="620" y="235" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial" fill="#7f1d1d">T inicial material</text><circle cx="205" cy="188" r="42" fill="#dbeafe" stroke="#3b82f6" stroke-width="5"/><text x="205" y="195" text-anchor="middle" font-size="17" font-family="Segoe UI, Arial" font-weight="700" fill="#1d4ed8">${tAgua}</text><text x="205" y="235" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial" fill="#1e3a8a">T inicial agua</text><rect x="250" y="515" width="320" height="62" rx="18" fill="#0f172a"/><text x="410" y="552" text-anchor="middle" font-size="28" font-family="Segoe UI, Arial" font-weight="700" fill="#f8fafc">T equilibrio: ${tFinal}</text></svg>`;
+      const estadoTermico = Number.isFinite(tf)
+        ? (tf > ti2 ? 'El agua absorbe energía hasta alcanzar el equilibrio.' : 'El sistema cede energía hasta alcanzar el equilibrio.')
+        : 'Presiona calcular para observar el equilibrio térmico.';
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 620"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f8fbff"/><stop offset="100%" stop-color="#e2ecff"/></linearGradient><linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.95"/><stop offset="100%" stop-color="#2563eb" stop-opacity="1"/></linearGradient><linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${paleta[0]}"/><stop offset="100%" stop-color="${paleta[1]}"/></linearGradient><linearGradient id="heat" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#ef4444"/></linearGradient></defs><rect width="820" height="620" rx="30" fill="url(#bg)"/><text x="410" y="58" text-anchor="middle" font-size="30" font-family="Segoe UI, Arial" font-weight="700" fill="#0f172a">Experimento de calorimetría</text><text x="410" y="96" text-anchor="middle" font-size="18" font-family="Segoe UI, Arial" fill="#475569">${materialLimpio} (${simbolo}) en agua dentro de un sistema aislado</text><rect x="145" y="178" width="530" height="300" rx="26" fill="#ffffff" stroke="#94a3b8" stroke-width="6"/><rect x="175" y="268" width="470" height="182" rx="18" fill="url(#water)"/><path d="M190 286 C 280 256, 360 302, 455 278 C 545 254, 605 290, 635 274" fill="none" stroke="#dbeafe" stroke-width="10" stroke-linecap="round" opacity="0.85"/><rect x="318" y="203" width="184" height="118" rx="24" fill="url(#metal)" stroke="#7c2d12" stroke-width="4"/><text x="410" y="254" text-anchor="middle" font-size="54" font-family="Segoe UI, Arial" font-weight="900" fill="#111827">${simbolo}</text><text x="410" y="290" text-anchor="middle" font-size="18" font-family="Segoe UI, Arial" fill="#7c2d12">${materialLimpio}</text><path d="M505 258 C 545 250, 566 254, 604 250" fill="none" stroke="url(#heat)" stroke-width="7" stroke-linecap="round"/><path d="M215 258 C 255 250, 276 254, 314 250" fill="none" stroke="#60a5fa" stroke-width="7" stroke-linecap="round"/><polygon points="598,242 621,250 598,258" fill="#ef4444"/><polygon points="221,242 198,250 221,258" fill="#60a5fa"/><circle cx="620" cy="188" r="42" fill="#fee2e2" stroke="#ef4444" stroke-width="5"/><text x="620" y="195" text-anchor="middle" font-size="17" font-family="Segoe UI, Arial" font-weight="700" fill="#b91c1c">${tMat}</text><text x="620" y="235" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial" fill="#7f1d1d">T inicial material</text><circle cx="205" cy="188" r="42" fill="#dbeafe" stroke="#3b82f6" stroke-width="5"/><text x="205" y="195" text-anchor="middle" font-size="17" font-family="Segoe UI, Arial" font-weight="700" fill="#1d4ed8">${tAgua}</text><text x="205" y="235" text-anchor="middle" font-size="16" font-family="Segoe UI, Arial" fill="#1e3a8a">T inicial agua</text><rect x="210" y="508" width="400" height="66" rx="18" fill="#0f172a"/><text x="410" y="545" text-anchor="middle" font-size="28" font-family="Segoe UI, Arial" font-weight="700" fill="#f8fafc">T equilibrio: ${tFinal}</text><text x="410" y="598" text-anchor="middle" font-size="17" font-family="Segoe UI, Arial" fill="#334155">${estadoTermico}</text></svg>`;
       return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+    }
+
+    function activarAnimacionCalorimetria() {
+      const panel = document.querySelector('#calorimetria .lab-object');
+      const boton = $('btnCalorimetria');
+      if (!panel || !boton) return;
+      panel.classList.remove('reacting');
+      void panel.offsetWidth;
+      panel.classList.add('reacting');
+      const textoOriginal = boton.dataset.originalText || boton.textContent;
+      boton.dataset.originalText = textoOriginal;
+      boton.classList.add('is-calculating');
+      boton.textContent = 'Calculando...';
+      setTimeout(() => {
+        panel.classList.remove('reacting');
+        boton.classList.remove('is-calculating');
+        boton.textContent = textoOriginal;
+      }, 1700);
     }
 
     function actualizarImagenCalorimetria(tf = null) {
       const material = $('material').value;
       const ti1 = parseFloat($('tempMaterial').value);
       const ti2 = parseFloat($('tempAgua').value);
+      const nombre = material === 'Fosforo' ? 'Fósforo' : material;
+      const simbolo = simbolosMateriales[material] || nombre.charAt(0).toUpperCase();
       $('calorImage').src = generarSvgCalor(material, ti1, ti2, tf);
-      const textoFinal = Number.isFinite(tf) ? ` Temperatura de equilibrio estimada: ${tf.toFixed(2)} °C.` : '';
-      $('calorCaption').textContent = `Vista del experimento con ${material === 'Fosforo' ? 'Fósforo' : material} y agua.${textoFinal}`;
+      const textoFinal = Number.isFinite(tf) ? ` Temperatura de equilibrio estimada: ${tf.toFixed(2)} °C.` : ' Presiona calcular para iniciar la simulación visual.';
+      $('calorCaption').textContent = `Vista del experimento con ${nombre} (${simbolo}) y agua.${textoFinal}`;
     }
 
     function actualizarMaterial() { const material = $('material').value; $('calorMaterial').value = materiales[material]; actualizarImagenCalorimetria(ultimoCalor && ultimoCalor.material === material ? ultimoCalor.tf : null); }
@@ -431,7 +466,7 @@
       setTile('calorTf', tf, '°C'); setTile('qMaterial', q1 / 1000, 'kJ'); setTile('qAgua', q2 / 1000, 'kJ'); setTile('dhMaterial', q1 / 1000, 'kJ'); setTile('dhAgua', q2 / 1000, 'kJ'); setTile('duMaterial', q1 / 1000, 'kJ'); setTile('duAgua', q2 / 1000, 'kJ'); setTile('tablaQMaterial', q1 / 1000, 'kJ'); setTile('tablaQAgua', q2 / 1000, 'kJ');
       $('calorInterpretacion').innerHTML = `<strong>Análisis:</strong><ul><li><strong>Temperatura final:</strong> es el punto de equilibrio térmico; ambos cuerpos terminan a ${fmt(tf, '°C')}.</li><li><strong>Q material:</strong> ${q1 < 0 ? 'negativo, por eso el material pierde calor.' : 'positivo, por eso el material gana calor.'}</li><li><strong>Q agua:</strong> ${q2 > 0 ? 'positivo, por eso el agua absorbe calor.' : 'negativo, por eso el agua libera calor.'}</li><li><strong>Balance:</strong> la suma de calores tiende a cero porque se supone un sistema aislado.</li></ul>`;
       ultimoCalor = { m1, ti1, m2, ti2, c1, c2, tf, q1, q2, material: $('material').value };
-      actualizarImagenCalorimetria(tf); return ultimoCalor;
+      actualizarImagenCalorimetria(tf); activarAnimacionCalorimetria(); return ultimoCalor;
     }
 
     function reiniciarCalorimetria() { $('masaMaterial').value = 0.25; $('tempMaterial').value = 95; $('masaAgua').value = 0.5; $('tempAgua').value = 22; $('material').value = 'Aluminio'; actualizarMaterial(); calcularCalorimetria(); }
