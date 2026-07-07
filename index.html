@@ -333,7 +333,10 @@
       <div class="section-title"><div><h3>Proceso Isocórico</h3><p>Volumen constante: V<sub>i</sub> = V<sub>f</sub>. El volumen no cambia, pero la presión y la temperatura sí pueden cambiar.</p></div><span class="pill">V constante · W_vol = 0 · Q = ΔU</span></div>
       <div class="workspace">
         <form class="card" id="isochoricForm"><h4>Datos de entrada</h4><div class="form-grid"><div class="field"><label for="gasIsochoric">Tipo de gas</label><select id="gasIsochoric"></select></div><div class="field"><label for="nIsochoric">Moles (n)</label><input id="nIsochoric" type="number" min="0.001" step="any" value="1" required /></div><div class="field"><label for="cvIsochoric">Cv (J/mol·K)</label><input id="cvIsochoric" type="number" readonly /></div><div class="field"><label for="cpIsochoric">Cp (J/mol·K)</label><input id="cpIsochoric" type="number" readonly /></div><div class="field"><label for="vIsochoric">Volumen constante (L)</label><input id="vIsochoric" type="number" min="0.001" step="any" value="10" required /></div><div class="field"><label for="piIsochoric">Presión inicial (atm)</label><input id="piIsochoric" type="number" min="0.001" step="any" value="1" required /></div><div class="field"><label for="pfIsochoric">Presión final (atm)</label><input id="pfIsochoric" type="number" min="0.001" step="any" value="2" required /></div><div class="field"><label for="tiIsochoric">Temperatura inicial (K)</label><input id="tiIsochoric" type="number" min="0.001" step="any" value="300" required /></div><div class="field"><label for="tfIsochoric">Temperatura final (K)</label><input id="tfIsochoric" type="number" min="0.001" step="any" value="450" required /></div></div><div class="formula">W_vol = 0<br />W_pres = V · (Pf − Pi) · 101.325<br />ΔU = n · Cv · (Tf − Ti) · ΔH = n · Cp · (Tf − Ti) · Q = ΔU</div><div class="button-row"><button class="btn btn-primary" type="submit">Calcular isocórico</button><button class="btn btn-outline" type="button" onclick="reiniciarIsocorico()">Reiniciar</button></div></form>
-        <div class="visual-card"><div class="card"><h4>Resultados e interpretación</h4><div class="result-grid"><div class="result-tile blue"><span>W_vol</span><strong id="isochoricWvol">--</strong></div><div class="result-tile purple"><span>W_pres</span><strong id="isochoricWpres">--</strong></div><div class="result-tile"><span>ΔU</span><strong id="isochoricDU">--</strong></div><div class="result-tile"><span>ΔH</span><strong id="isochoricDH">--</strong></div><div class="result-tile good"><span>Q</span><strong id="isochoricQ">--</strong></div><div class="result-tile orange"><span>ΔT</span><strong id="isochoricDT">--</strong></div></div><div class="interpretation" style="margin-top: 14px;" id="isochoricInterpretacion">Calcula para ver qué implica cada resultado.</div></div></div>
+        <div class="visual-card">
+          <div class="card"><h4>Resultados e interpretación</h4><div class="result-grid"><div class="result-tile blue"><span>W_vol</span><strong id="isochoricWvol">--</strong></div><div class="result-tile purple"><span>W_pres</span><strong id="isochoricWpres">--</strong></div><div class="result-tile"><span>ΔU</span><strong id="isochoricDU">--</strong></div><div class="result-tile"><span>ΔH</span><strong id="isochoricDH">--</strong></div><div class="result-tile good"><span>Q</span><strong id="isochoricQ">--</strong></div><div class="result-tile orange"><span>ΔT</span><strong id="isochoricDT">--</strong></div></div><div class="interpretation" style="margin-top: 14px;" id="isochoricInterpretacion">Calcula para ver qué implica cada resultado.</div></div>
+          <div class="canvas-wrap"><canvas id="isochoricCanvas" width="820" height="430" aria-label="Gráfica P-V isocórica"></canvas></div>
+        </div>
       </div>
     </section>
 
@@ -341,7 +344,11 @@
       <div class="section-title"><div><h3>Proceso Isobárico</h3><p>Presión constante: P<sub>i</sub> = P<sub>f</sub>. El volumen cambia y aparece trabajo de volumen con la convención de signos indicada.</p></div><span class="pill">P constante · W_pres = 0 · Q = ΔH</span></div>
       <div class="workspace">
         <form class="card" id="isobaricForm"><h4>Datos de entrada</h4><div class="form-grid"><div class="field"><label for="gasIsobaric">Tipo de gas</label><select id="gasIsobaric"></select></div><div class="field"><label for="nIsobaric">Moles (n)</label><input id="nIsobaric" type="number" min="0.001" step="any" value="1" required /></div><div class="field"><label for="cvIsobaric">Cv (J/mol·K)</label><input id="cvIsobaric" type="number" readonly /></div><div class="field"><label for="cpIsobaric">Cp (J/mol·K)</label><input id="cpIsobaric" type="number" readonly /></div><div class="field"><label for="pIsobaric">Presión constante (atm)</label><input id="pIsobaric" type="number" min="0.001" step="any" value="1" required /></div><div class="field"><label for="viIsobaric">Volumen inicial (L)</label><input id="viIsobaric" type="number" min="0.001" step="any" value="10" required /></div><div class="field"><label for="vfIsobaric">Volumen final (L)</label><input id="vfIsobaric" type="number" min="0.001" step="any" value="20" required /></div><div class="field"><label for="tiIsobaric">Temperatura inicial (K)</label><input id="tiIsobaric" type="number" min="0.001" step="any" value="300" required /></div><div class="field"><label for="tfIsobaric">Temperatura final (K)</label><input id="tfIsobaric" type="number" min="0.001" step="any" value="600" required /></div></div><div class="formula">W_pres = 0<br />W_vol = −P · (Vf − Vi) · 101.325<br />ΔU = n · Cv · (Tf − Ti) · ΔH = n · Cp · (Tf − Ti) · Q = ΔH</div><div class="button-row"><button class="btn btn-primary" type="submit">Calcular isobárico</button><button class="btn btn-outline" type="button" onclick="reiniciarIsobarico()">Reiniciar</button></div></form>
-        <div class="visual-card"><div class="card"><h4>Resultados e interpretación</h4><div class="result-grid"><div class="result-tile blue"><span>W_pres</span><strong id="isobaricWpres">--</strong></div><div class="result-tile purple"><span>W_vol</span><strong id="isobaricWvol">--</strong></div><div class="result-tile"><span>ΔU</span><strong id="isobaricDU">--</strong></div><div class="result-tile"><span>ΔH</span><strong id="isobaricDH">--</strong></div><div class="result-tile good"><span>Q</span><strong id="isobaricQ">--</strong></div><div class="result-tile orange"><span>ΔV</span><strong id="isobaricDV">--</strong></div></div><div class="interpretation" style="margin-top: 14px;" id="isobaricInterpretacion">Calcula para ver qué implica cada resultado.</div></div><div class="card" id="reporte"><h4>Guardar resultados</h4><div class="form-grid"><div class="field"><label for="estudiante">Nombre del estudiante</label><input id="estudiante" type="text" placeholder="Escribe tu nombre" /></div><div class="field" style="display:flex; align-items:flex-end;"><button class="btn btn-primary" type="button" style="width:100%;" onclick="imprimirReporte()">Imprimir / guardar PDF</button></div></div></div></div>
+        <div class="visual-card">
+          <div class="card"><h4>Resultados e interpretación</h4><div class="result-grid"><div class="result-tile blue"><span>W_pres</span><strong id="isobaricWpres">--</strong></div><div class="result-tile purple"><span>W_vol</span><strong id="isobaricWvol">--</strong></div><div class="result-tile"><span>ΔU</span><strong id="isobaricDU">--</strong></div><div class="result-tile"><span>ΔH</span><strong id="isobaricDH">--</strong></div><div class="result-tile good"><span>Q</span><strong id="isobaricQ">--</strong></div><div class="result-tile orange"><span>ΔV</span><strong id="isobaricDV">--</strong></div></div><div class="interpretation" style="margin-top: 14px;" id="isobaricInterpretacion">Calcula para ver qué implica cada resultado.</div></div>
+          <div class="canvas-wrap"><canvas id="isobaricCanvas" width="820" height="430" aria-label="Gráfica P-V isobárica"></canvas></div>
+          <div class="card" id="reporte"><h4>Guardar resultados</h4><div class="form-grid"><div class="field"><label for="estudiante">Nombre del estudiante</label><input id="estudiante" type="text" placeholder="Escribe tu nombre" /></div><div class="field" style="display:flex; align-items:flex-end;"><button class="btn btn-primary" type="button" style="width:100%;" onclick="imprimirReporte()">Imprimir / guardar PDF</button></div></div></div>
+        </div>
       </div>
     </section>
   </main>
@@ -384,6 +391,8 @@
       setTimeout(() => {
         if (tabId === 'isotermico' && ultimoIso) dibujarIsotermico(ultimoIso);
         if (tabId === 'adiabatico' && ultimoAdi) dibujarAdiabatico(ultimoAdi);
+        if (tabId === 'isocorico' && ultimoIsocorico) dibujarIsocorico(ultimoIsocorico);
+        if (tabId === 'isobarico' && ultimoIsobarico) dibujarIsobarico(ultimoIsobarico);
       }, 60);
     }
 
@@ -402,7 +411,6 @@
         const select = $(id);
         select.innerHTML = Object.entries(gases).map(([key, gas]) => `<option value="${key}">${gas.nombre}</option>`).join('');
       });
-      $('tablaGases').innerHTML = Object.entries(gases).map(([key, gas]) => `<tr><td>${gas.nombre}</td><td>${fmt(gas.cv, 'J/mol·K')}</td><td>${fmt(gas.cp, 'J/mol·K')}</td><td>${fmt(gas.cp / gas.cv, '', 3)}</td></tr>`).join('');
       actualizarGasAdiabatico(); actualizarGasIsocorico(); actualizarGasIsobarico();
     }
 
@@ -524,7 +532,9 @@
       const wVol = 0, wPres = V * (Pf - Pi) * L_ATM_TO_J, dU = n * cv * (Tf - Ti), dH = n * cp * (Tf - Ti), q = dU, dT = Tf - Ti;
       setTile('isochoricWvol', wVol, 'J'); setTile('isochoricWpres', wPres, 'J'); setTile('isochoricDU', dU, 'J'); setTile('isochoricDH', dH, 'J'); setTile('isochoricQ', q, 'J'); setTile('isochoricDT', dT, 'K');
       $('isochoricInterpretacion').innerHTML = `<strong>Análisis del Proceso Isocórico:</strong> Al mantenerse el volumen rígidamente constante, el sistema no experimenta expansión ni compresión, por lo que el Trabajo de Volumen es cero (W_vol=0). Sin embargo, existe un Trabajo de Presión asociado al cambio de presión del gas. Todo el calor (Q) transferido se convierte íntegramente en un cambio de la Energía Interna (ΔU), modificando directamente la temperatura del sistema.<ul><li><strong>W_pres:</strong> ${signoEnergia(wPres)} porque la presión ${Pf > Pi ? 'aumenta' : Pf < Pi ? 'disminuye' : 'no cambia'}.</li><li><strong>ΔU y Q:</strong> tienen el mismo valor: ${fmt(q, 'J')}.</li><li><strong>ΔH:</strong> mide el cambio energético a presión equivalente usando Cp.</li></ul>`;
-      ultimoIsocorico = { n, V, Pi, Pf, Ti, Tf, cv, cp, wVol, wPres, dU, dH, q, dT, gas: gas.nombre }; return ultimoIsocorico;
+      ultimoIsocorico = { n, V, Pi, Pf, Ti, Tf, cv, cp, wVol, wPres, dU, dH, q, dT, gas: gas.nombre };
+      dibujarIsocorico(ultimoIsocorico);
+      return ultimoIsocorico;
     }
 
     function calcularIsobarico() {
@@ -534,7 +544,9 @@
       const wPres = 0, wVol = -P * (Vf - Vi) * L_ATM_TO_J, dU = n * cv * (Tf - Ti), dH = n * cp * (Tf - Ti), q = dH, dV = Vf - Vi;
       setTile('isobaricWpres', wPres, 'J'); setTile('isobaricWvol', wVol, 'J'); setTile('isobaricDU', dU, 'J'); setTile('isobaricDH', dH, 'J'); setTile('isobaricQ', q, 'J'); setTile('isobaricDV', dV, 'L');
       $('isobaricInterpretacion').innerHTML = `<strong>Análisis del Proceso Isobárico:</strong> El sistema se expande o comprime manteniendo una presión constante. Como hay cambio de volumen, el sistema genera un Trabajo de Volumen (W_vol), cediendo o recibiendo energía del ambiente. En estas condiciones de presión fija, el calor transferido (Q) es matemáticamente idéntico al cambio de Entalpía (ΔH) del sistema.<ul><li><strong>W_vol:</strong> ${signoEnergia(wVol)}; ${dV > 0 ? 'es negativo porque el sistema se expande y entrega trabajo al ambiente.' : dV < 0 ? 'es positivo porque el ambiente comprime al sistema.' : 'es cero porque no cambió el volumen.'}</li><li><strong>Q y ΔH:</strong> tienen el mismo valor: ${fmt(q, 'J')}.</li><li><strong>ΔU:</strong> depende de Cv y de la variación de temperatura.</li></ul>`;
-      ultimoIsobarico = { n, P, Vi, Vf, Ti, Tf, cv, cp, wPres, wVol, dU, dH, q, dV, gas: gas.nombre }; return ultimoIsobarico;
+      ultimoIsobarico = { n, P, Vi, Vf, Ti, Tf, cv, cp, wPres, wVol, dU, dH, q, dV, gas: gas.nombre };
+      dibujarIsobarico(ultimoIsobarico);
+      return ultimoIsobarico;
     }
 
     function reiniciarIsocorico() { $('gasIsochoric').value = 'diatomico'; actualizarGasIsocorico(); $('nIsochoric').value = 1; $('vIsochoric').value = 10; $('piIsochoric').value = 1; $('pfIsochoric').value = 2; $('tiIsochoric').value = 300; $('tfIsochoric').value = 450; calcularIsocorico(); }
@@ -558,6 +570,34 @@
     function dibujarIsotermico(data) { const { ctx, w, h } = getCanvasContext('isoCanvas'); const minV = Math.max(0.01, Math.min(data.Vi, data.Vf) * 0.65), maxV = Math.max(data.Vi, data.Vf) * 1.35, maxP = Math.max(data.Pi, data.Pf, data.n * R_ATM * data.T / minV) * 1.12; const { map } = dibujarBase(ctx, w, h, { xMin: 0, xMax: maxV, yMin: 0, yMax: maxP }, 'Diagrama P-V isotérmico'); const curva = []; for (let i = 0; i <= 160; i++) { const V = minV + (maxV - minV) * i / 160; curva.push({ x: V, y: data.n * R_ATM * data.T / V }); } drawLine(ctx, curva, map, '#0ea5e9', 3); drawLine(ctx, [{x: data.Vi, y: data.Pf}, {x: data.Vf, y: data.Pf}], map, '#f97316', 3, [8, 6]); drawLine(ctx, [{x: data.Vi, y: data.Pi}, {x: data.Vi, y: data.Pf}], map, '#f97316', 2, [4, 6]); drawPoint(ctx, {x: data.Vi, y: data.Pi}, map, '#22c55e', 'Inicial'); drawPoint(ctx, {x: data.Vf, y: data.Pf}, map, '#ef4444', 'Final'); drawLegend(ctx, [{ color: '#0ea5e9', text: 'Trayectoria reversible' }, { color: '#f97316', text: 'Trabajo irreversible a P externa' }], Math.max(74, w - 300), 58); }
     function dibujarAdiabatico(data) { const { ctx, w, h } = getCanvasContext('adiCanvas'); const minV = Math.max(0.01, Math.min(data.Vi, data.Vf) * 0.65), maxV = Math.max(data.Vi, data.Vf) * 1.35, K = data.Pi * Math.pow(data.Vi, data.gamma), maxP = Math.max(data.Pi, data.Pf, K / Math.pow(minV, data.gamma)) * 1.12; const { map } = dibujarBase(ctx, w, h, { xMin: 0, xMax: maxV, yMin: 0, yMax: maxP }, 'Diagrama P-V adiabático'); const curvaAdi = [], curvaIsoTi = []; for (let i = 0; i <= 160; i++) { const V = minV + (maxV - minV) * i / 160; curvaAdi.push({ x: V, y: K / Math.pow(V, data.gamma) }); curvaIsoTi.push({ x: V, y: data.n * R_ATM * data.Ti / V }); } drawLine(ctx, curvaAdi, map, '#7c3aed', 3); drawLine(ctx, curvaIsoTi, map, '#0ea5e9', 2, [7, 5]); drawPoint(ctx, {x: data.Vi, y: data.Pi}, map, '#22c55e', 'Inicial'); drawPoint(ctx, {x: data.Vf, y: data.Pf}, map, '#ef4444', 'Final'); drawLegend(ctx, [{ color: '#7c3aed', text: 'Adiabática reversible' }, { color: '#0ea5e9', text: 'Isoterma inicial' }], Math.max(74, w - 310), 58); }
 
+    function dibujarIsocorico(data) {
+      const { ctx, w, h } = getCanvasContext('isochoricCanvas');
+      const minV = Math.max(0.01, data.V * 0.5);
+      const maxV = data.V * 1.5;
+      const maxP = Math.max(data.Pi, data.Pf) * 1.2;
+      const bounds = { xMin: 0, xMax: maxV, yMin: 0, yMax: maxP };
+      const { map } = dibujarBase(ctx, w, h, bounds, 'Diagrama P-V isocórico');
+
+      drawLine(ctx, [{x: data.V, y: data.Pi}, {x: data.V, y: data.Pf}], map, '#0ea5e9', 4);
+      drawPoint(ctx, {x: data.V, y: data.Pi}, map, '#22c55e', 'Inicial');
+      drawPoint(ctx, {x: data.V, y: data.Pf}, map, '#ef4444', 'Final');
+      drawLegend(ctx, [{ color: '#0ea5e9', text: 'Proceso Isocórico (V cte)' }], Math.max(74, w - 240), 58);
+    }
+
+    function dibujarIsobarico(data) {
+      const { ctx, w, h } = getCanvasContext('isobaricCanvas');
+      const minV = Math.max(0.01, Math.min(data.Vi, data.Vf) * 0.5);
+      const maxV = Math.max(data.Vi, data.Vf) * 1.5;
+      const maxP = data.P * 1.5;
+      const bounds = { xMin: 0, xMax: maxV, yMin: 0, yMax: maxP };
+      const { map } = dibujarBase(ctx, w, h, bounds, 'Diagrama P-V isobárico');
+
+      drawLine(ctx, [{x: data.Vi, y: data.P}, {x: data.Vf, y: data.P}], map, '#0ea5e9', 4);
+      drawPoint(ctx, {x: data.Vi, y: data.P}, map, '#22c55e', 'Inicial');
+      drawPoint(ctx, {x: data.Vf, y: data.P}, map, '#ef4444', 'Final');
+      drawLegend(ctx, [{ color: '#0ea5e9', text: 'Proceso Isobárico (P cte)' }], Math.max(74, w - 240), 58);
+    }
+
     function llenarEjemplos() { reiniciarCalorimetria(); reiniciarIsotermico(); $('gasAdi').value = 'diatomico'; actualizarGasAdiabatico(); usarDatosIsotermicos(); reiniciarIsocorico(); reiniciarIsobarico(); activarTab('calorimetria'); }
 
     function imprimirReporte() {
@@ -578,7 +618,13 @@
     $('isochoricForm').addEventListener('submit', (event) => { event.preventDefault(); calcularIsocorico(); });
     $('isobaricForm').addEventListener('submit', (event) => { event.preventDefault(); calcularIsobarico(); });
 
-    window.addEventListener('resize', () => { if (ultimoIso) dibujarIsotermico(ultimoIso); if (ultimoAdi) dibujarAdiabatico(ultimoAdi); });
+    window.addEventListener('resize', () => { 
+      if (ultimoIso) dibujarIsotermico(ultimoIso); 
+      if (ultimoAdi) dibujarAdiabatico(ultimoAdi); 
+      if (ultimoIsocorico) dibujarIsocorico(ultimoIsocorico);
+      if (ultimoIsobarico) dibujarIsobarico(ultimoIsobarico);
+    });
+    
     window.addEventListener('DOMContentLoaded', () => { poblarGases(); actualizarMaterial(); actualizarEntradaIso(); calcularCalorimetria(); simularIsotermico(); simularAdiabatico(); calcularIsocorico(); calcularIsobarico(); const hash = location.hash.replace('#', ''); if (['calorimetria', 'isotermico', 'adiabatico', 'isocorico', 'isobarico'].includes(hash)) activarTab(hash); });
   </script>
 </body>
