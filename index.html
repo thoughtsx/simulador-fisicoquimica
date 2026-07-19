@@ -202,9 +202,9 @@
         <aside class="hero-card">
           <strong>Datos del proyecto</strong>
           <p style="color: rgba(255,255,255,0.76); line-height: 1.6; margin: 10px 0 0;">
-            Autores: Dennys Sagñay, Kevin Sandoval, Kristel Sarango, Emily Vargas.<br />
+            Autores: Michelle Cruz, Nicole Gortaire, John Guamán<br />
             Docente: Ing. Raquel Zúñiga<br />
-            Año: 2026
+            Año: 2025
           </p>
           <div class="metric-grid">
             <div class="metric"><strong>5</strong><span>Módulos unidos</span></div>
@@ -246,20 +246,10 @@
             <div class="field">
               <label for="material">Material</label>
               <select id="material" required>
-                <option value="Aluminio">Aluminio</option>
-                <option value="Cobre">Cobre</option>
-                <option value="Hierro">Hierro</option>
-                <option value="Oro">Oro</option>
-                <option value="Plata">Plata</option>
-                <option value="Zinc">Zinc</option>
-                <option value="Carbono">Carbono</option>
-                <option value="Azufre">Azufre</option>
-                <option value="Fosforo">Fósforo</option>
-                <option value="Yodo">Yodo</option>
-                <option value="Manual">Manual (Ingresar Cp)</option>
+                <option value="Aluminio">Aluminio</option><option value="Cobre">Cobre</option><option value="Hierro">Hierro</option><option value="Oro">Oro</option><option value="Plata">Plata</option><option value="Zinc">Zinc</option><option value="Carbono">Carbono</option><option value="Azufre">Azufre</option><option value="Fosforo">Fósforo</option><option value="Yodo">Yodo</option><option value="Personalizado">Personalizado / ingresar cp manual</option>
               </select>
             </div>
-            <div class="field"><label for="calorMaterial">Calor específico (Cp) (J/kg·°C)</label><input id="calorMaterial" type="number" readonly /></div>
+            <div class="field"><label for="calorMaterial">cp del material (J/kg·°C)</label><input id="calorMaterial" type="number" min="0.001" step="any" readonly placeholder="Ingresa cp manual" /></div>
             <div class="field"><label for="calorAguaInput">Calor específico del agua (J/kg·°C)</label><input id="calorAguaInput" type="number" value="4186" readonly /></div>
           </div>
           <div class="button-row"><button class="btn btn-primary" id="btnCalorimetria" type="submit">Calcular</button><button class="btn btn-outline" type="button" onclick="reiniciarCalorimetria()">Reiniciar</button></div>
@@ -279,7 +269,7 @@
             <div class="table-wrap" style="margin-top: 14px;">
               <table>
                 <thead><tr><th>Magnitud</th><th>Material</th><th>Agua</th></tr></thead>
-                <tbody><tr><td>Δh</td><td id="dhMaterial">--</td><td id="dhAgua">--</td></tr><tr><td>Δu</td><td id="duMaterial">--</td><td id="duAgua">--</td></tr><tr><td>Calor q</td><td id="tablaQMaterial">--</td><td id="tablaQAgua">--</td></tr></tbody>
+                <tbody><tr><td>ΔH</td><td id="dhMaterial">--</td><td id="dhAgua">--</td></tr><tr><td>ΔU</td><td id="duMaterial">--</td><td id="duAgua">--</td></tr><tr><td>Calor q</td><td id="tablaQMaterial">--</td><td id="tablaQAgua">--</td></tr></tbody>
               </table>
             </div>
             <div class="interpretation" style="margin-top: 14px;" id="calorInterpretacion">Calcula para ver qué implica cada resultado.</div>
@@ -289,7 +279,7 @@
     </section>
 
     <section class="section" id="isotermico">
-      <div class="section-title"><div><h3>Proceso Isotérmico: Reversible vs Irreversible</h3><p>Compara el trabajo, calor, Δu y Δh para un gas ideal a temperatura constante. Puedes ingresar presiones o volúmenes.</p></div><span class="pill">T constante · Δu = 0 · Δh = 0</span></div>
+      <div class="section-title"><div><h3>Proceso Isotérmico: Reversible vs Irreversible</h3><p>Compara el trabajo, calor, ΔU y ΔH para un gas ideal a temperatura constante. Puedes ingresar presiones o volúmenes.</p></div><span class="pill">T constante · ΔU = 0 · ΔH = 0</span></div>
       <div class="workspace">
         <form class="card" id="isoForm">
           <h4>Datos de entrada</h4>
@@ -302,13 +292,13 @@
             <div class="field iso-volumen"><label for="viIso">Volumen inicial (L)</label><input id="viIso" type="number" min="0.001" step="any" value="24.62" required /></div>
             <div class="field iso-volumen"><label for="vfIso">Volumen final (L)</label><input id="vfIso" type="number" min="0.001" step="any" value="49.23" required /></div>
           </div>
-          <p class="note" style="margin-top: 14px;">Convención usada: si el sistema se expande y entrega trabajo al ambiente, w de volumen es negativo.</p>
+          <p class="note" style="margin-top: 14px;">Convención usada: si el sistema se expande y entrega trabajo al ambiente, W de volumen es negativo.</p>
           <div class="button-row"><button class="btn btn-primary" type="submit">Simular</button><button class="btn btn-outline" type="button" onclick="reiniciarIsotermico()">Reiniciar</button></div>
         </form>
         <div class="visual-card">
           <div class="card"><h4>Resultados e interpretación</h4>
             <div class="result-grid"><div class="result-tile blue"><span>Vi</span><strong id="isoVi">--</strong></div><div class="result-tile blue"><span>Vf</span><strong id="isoVf">--</strong></div><div class="result-tile"><span>Pi</span><strong id="isoPi">--</strong></div><div class="result-tile"><span>Pf</span><strong id="isoPf">--</strong></div><div class="result-tile purple"><span>w reversible</span><strong id="isoWrev">--</strong></div><div class="result-tile purple"><span>w irreversible</span><strong id="isoWirr">--</strong></div></div>
-            <div class="table-wrap" style="margin-top: 14px;"><table><thead><tr><th>Proceso</th><th>w</th><th>q</th><th>Δu</th><th>Δh</th></tr></thead><tbody><tr><td>Reversible</td><td id="wRevTable">--</td><td id="qRevTable">--</td><td id="isoDUrev">0.00 J</td><td id="isoDHrev">0.00 J</td></tr><tr><td>Irreversible</td><td id="wIrrTable">--</td><td id="qIrrTable">--</td><td id="isoDUirr">0.00 J</td><td id="isoDHirr">0.00 J</td></tr></tbody></table></div>
+            <div class="table-wrap" style="margin-top: 14px;"><table><thead><tr><th>Proceso</th><th>wv</th><th>q</th><th>ΔU</th><th>ΔH</th></tr></thead><tbody><tr><td>Reversible</td><td id="wRevTable">--</td><td id="qRevTable">--</td><td id="isoDUrev">0.00 J</td><td id="isoDHrev">0.00 J</td></tr><tr><td>Irreversible</td><td id="wIrrTable">--</td><td id="qIrrTable">--</td><td id="isoDUirr">0.00 J</td><td id="isoDHirr">0.00 J</td></tr></tbody></table></div>
             <div class="interpretation" style="margin-top: 14px;" id="isoInterpretacion">Simula para ver qué implica cada resultado.</div>
           </div>
           <div class="canvas-wrap"><canvas id="isoCanvas" width="820" height="430" aria-label="Gráfica P-V isotérmica"></canvas></div>
@@ -317,7 +307,7 @@
     </section>
 
     <section class="section" id="adiabatico">
-      <div class="section-title"><div><h3>Proceso Adiabático Reversible</h3><p>Calcula el estado final cuando no existe transferencia de calor. Δu y Δh se calculan con Cv y Cp desde la tabla del gas.</p></div><span class="pill">q = 0 · PVγ = constante</span></div>
+      <div class="section-title"><div><h3>Proceso Adiabático Reversible</h3><p>Calcula el estado final cuando no existe transferencia de calor. ΔU y ΔH se calculan con Cv y Cp desde la tabla del gas.</p></div><span class="pill">q = 0 · PVγ = constante</span></div>
       <div class="workspace">
         <form class="card" id="adiForm">
           <h4>Datos de entrada</h4>
@@ -332,36 +322,26 @@
             <div class="field"><label for="viAdi">Volumen inicial (L)</label><input id="viAdi" type="number" min="0.001" step="any" value="24.62" required /></div>
             <div class="field"><label for="vfAdi">Volumen final (L)</label><input id="vfAdi" type="number" min="0.001" step="any" value="49.23" required /></div>
           </div>
-          <div class="formula">T₂ = T₁(V₁/V₂)<sup>γ−1</sup> · P₂ = P₁(V₁/V₂)<sup>γ</sup><br />Δu = wv = n·Cv·(Tf−Ti) · Δh = wp = n·Cp·(Tf−Ti) · q = 0</div>
+          <div class="formula">T₂ = T₁(V₁/V₂)<sup>γ−1</sup> · P₂ = P₁(V₁/V₂)<sup>γ</sup><br />ΔU = wv = n·Cv·(Tf−Ti) · ΔH = wp = n·Cp·(Tf−Ti) · q = 0</div>
           <div class="button-row"><button class="btn btn-primary" type="submit">Simular adiabático</button><button class="btn btn-outline" type="button" onclick="usarDatosIsotermicos()">Usar datos isotérmicos</button></div>
         </form>
-        <div class="visual-card"><div class="card"><h4>Resultados e interpretación</h4>
-          <div class="result-grid">
-            <div class="result-tile blue"><span>Pf</span><strong id="adiPf">--</strong></div>
-            <div class="result-tile blue"><span>Tf</span><strong id="adiTf">--</strong></div>
-            <div class="result-tile purple"><span>wv</span><strong id="adiW">--</strong></div>
-            <div class="result-tile purple"><span>wp</span><strong id="adiWp">--</strong></div>
-            <div class="result-tile"><span>q</span><strong id="adiQ">0.00 J</strong></div>
-            <div class="result-tile"><span>Δu</span><strong id="adiDU">--</strong></div>
-            <div class="result-tile"><span>Δh</span><strong id="adiDH">--</strong></div>
-          </div>
-          <div class="interpretation" style="margin-top: 14px;" id="adiInterpretacion">Simula para ver qué implica cada resultado.</div></div><div class="canvas-wrap"><canvas id="adiCanvas" width="820" height="430" aria-label="Gráfica P-V adiabática"></canvas></div></div>
+        <div class="visual-card"><div class="card"><h4>Resultados e interpretación</h4><div class="result-grid"><div class="result-tile blue"><span>Pf</span><strong id="adiPf">--</strong></div><div class="result-tile blue"><span>Tf</span><strong id="adiTf">--</strong></div><div class="result-tile purple"><span>wv</span><strong id="adiW">--</strong></div><div class="result-tile"><span>q</span><strong id="adiQ">0.00 J</strong></div><div class="result-tile"><span>ΔU = wv</span><strong id="adiDU">--</strong></div><div class="result-tile"><span>ΔH = wp</span><strong id="adiDH">--</strong></div></div><div class="interpretation" style="margin-top: 14px;" id="adiInterpretacion">Simula para ver qué implica cada resultado.</div></div><div class="canvas-wrap"><canvas id="adiCanvas" width="820" height="430" aria-label="Gráfica P-V adiabática"></canvas></div></div>
       </div>
     </section>
 
     <section class="section" id="isocorico">
-      <div class="section-title"><div><h3>Proceso Isocórico</h3><p>Volumen constante: V<sub>i</sub> = V<sub>f</sub>. El volumen no cambia, pero la presión y la temperatura sí pueden cambiar.</p></div><span class="pill">V constante · w_vol = 0 · q = Δu</span></div>
+      <div class="section-title"><div><h3>Proceso Isocórico</h3><p>Volumen constante: V<sub>i</sub> = V<sub>f</sub>. El volumen no cambia, pero la presión y la temperatura sí pueden cambiar.</p></div><span class="pill">V constante · w_vol = 0 · q = ΔU</span></div>
       <div class="workspace">
-        <form class="card" id="isochoricForm"><h4>Datos de entrada</h4><div class="form-grid"><div class="field"><label for="gasIsochoric">Tipo de gas</label><select id="gasIsochoric"></select></div><div class="field"><label for="nIsochoric">Moles (n)</label><input id="nIsochoric" type="number" min="0.001" step="any" value="1" required /></div><div class="field"><label for="cvIsochoric">Cv (J/mol·K)</label><input id="cvIsochoric" type="number" readonly /></div><div class="field"><label for="cpIsochoric">Cp (J/mol·K)</label><input id="cpIsochoric" type="number" readonly /></div><div class="field"><label for="vIsochoric">Volumen constante (L)</label><input id="vIsochoric" type="number" min="0.001" step="any" value="10" required /></div><div class="field"><label for="piIsochoric">Presión inicial (atm)</label><input id="piIsochoric" type="number" min="0.001" step="any" value="1" required /></div><div class="field"><label for="pfIsochoric">Presión final (atm)</label><input id="pfIsochoric" type="number" min="0.001" step="any" value="2" required /></div><div class="field"><label for="tiIsochoric">Temperatura inicial (K)</label><input id="tiIsochoric" type="number" min="0.001" step="any" value="300" required /></div><div class="field"><label for="tfIsochoric">Temperatura final (K)</label><input id="tfIsochoric" type="number" min="0.001" step="any" value="450" required /></div></div><div class="formula">w_vol = 0<br />w_pres = V · (Pf − Pi) · 101.325<br />Δu = n · Cv · (Tf − Ti) · Δh = n · Cp · (Tf − Ti) · q = Δu</div><div class="button-row"><button class="btn btn-primary" type="submit">Calcular isocórico</button><button class="btn btn-outline" type="button" onclick="reiniciarIsocorico()">Reiniciar</button></div></form>
-        <div class="visual-card"><div class="card"><h4>Resultados e interpretación</h4><div class="result-grid"><div class="result-tile blue"><span>w_vol</span><strong id="isochoricWvol">--</strong></div><div class="result-tile purple"><span>w_pres</span><strong id="isochoricWpres">--</strong></div><div class="result-tile"><span>Δu</span><strong id="isochoricDU">--</strong></div><div class="result-tile"><span>Δh</span><strong id="isochoricDH">--</strong></div><div class="result-tile good"><span>q</span><strong id="isochoricQ">--</strong></div><div class="result-tile orange"><span>ΔT</span><strong id="isochoricDT">--</strong></div></div><div class="interpretation" style="margin-top: 14px;" id="isochoricInterpretacion">Calcula para ver qué implica cada resultado.</div></div><div class="canvas-wrap"><canvas id="isochoricCanvas" width="820" height="430" aria-label="Gráfica P-V isocórica"></canvas></div></div>
+        <form class="card" id="isochoricForm"><h4>Datos de entrada</h4><div class="form-grid"><div class="field"><label for="gasIsochoric">Tipo de gas</label><select id="gasIsochoric"></select></div><div class="field"><label for="nIsochoric">Moles (n)</label><input id="nIsochoric" type="number" min="0.001" step="any" value="1" required /></div><div class="field"><label for="cvIsochoric">Cv (J/mol·K)</label><input id="cvIsochoric" type="number" readonly /></div><div class="field"><label for="cpIsochoric">Cp (J/mol·K)</label><input id="cpIsochoric" type="number" readonly /></div><div class="field"><label for="vIsochoric">Volumen constante (L)</label><input id="vIsochoric" type="number" min="0.001" step="any" value="10" required /></div><div class="field"><label for="piIsochoric">Presión inicial (atm)</label><input id="piIsochoric" type="number" min="0.001" step="any" value="1" required /></div><div class="field"><label for="pfIsochoric">Presión final (atm)</label><input id="pfIsochoric" type="number" min="0.001" step="any" value="2" required /></div><div class="field"><label for="tiIsochoric">Temperatura inicial (K)</label><input id="tiIsochoric" type="number" min="0.001" step="any" value="300" required /></div><div class="field"><label for="tfIsochoric">Temperatura final (K)</label><input id="tfIsochoric" type="number" min="0.001" step="any" value="450" required /></div></div><div class="formula">w_vol = 0<br />w_pres = V · (Pf − Pi) · 101.325<br />ΔU = n · Cv · (Tf − Ti) · ΔH = n · Cp · (Tf − Ti) · q = ΔU</div><div class="button-row"><button class="btn btn-primary" type="submit">Calcular isocórico</button><button class="btn btn-outline" type="button" onclick="reiniciarIsocorico()">Reiniciar</button></div></form>
+        <div class="visual-card"><div class="card"><h4>Resultados e interpretación</h4><div class="result-grid"><div class="result-tile blue"><span>w_vol</span><strong id="isochoricWvol">--</strong></div><div class="result-tile purple"><span>w_pres</span><strong id="isochoricWpres">--</strong></div><div class="result-tile"><span>ΔU</span><strong id="isochoricDU">--</strong></div><div class="result-tile"><span>ΔH</span><strong id="isochoricDH">--</strong></div><div class="result-tile good"><span>q</span><strong id="isochoricQ">--</strong></div><div class="result-tile orange"><span>ΔT</span><strong id="isochoricDT">--</strong></div></div><div class="interpretation" style="margin-top: 14px;" id="isochoricInterpretacion">Calcula para ver qué implica cada resultado.</div></div><div class="canvas-wrap"><canvas id="isochoricCanvas" width="820" height="430" aria-label="Gráfica P-V isocórica"></canvas></div></div>
       </div>
     </section>
 
     <section class="section" id="isobarico">
-      <div class="section-title"><div><h3>Proceso Isobárico</h3><p>Presión constante: P<sub>i</sub> = P<sub>f</sub>. El volumen cambia y aparece trabajo de volumen con la convención de signos indicada.</p></div><span class="pill">P constante · w_pres = 0 · q = Δh</span></div>
+      <div class="section-title"><div><h3>Proceso Isobárico</h3><p>Presión constante: P<sub>i</sub> = P<sub>f</sub>. El volumen cambia y aparece trabajo de volumen con la convención de signos indicada.</p></div><span class="pill">P constante · w_pres = 0 · q = ΔH</span></div>
       <div class="workspace">
-        <form class="card" id="isobaricForm"><h4>Datos de entrada</h4><div class="form-grid"><div class="field"><label for="gasIsobaric">Tipo de gas</label><select id="gasIsobaric"></select></div><div class="field"><label for="nIsobaric">Moles (n)</label><input id="nIsobaric" type="number" min="0.001" step="any" value="1" required /></div><div class="field"><label for="cvIsobaric">Cv (J/mol·K)</label><input id="cvIsobaric" type="number" readonly /></div><div class="field"><label for="cpIsobaric">Cp (J/mol·K)</label><input id="cpIsobaric" type="number" readonly /></div><div class="field"><label for="pIsobaric">Presión constante (atm)</label><input id="pIsobaric" type="number" min="0.001" step="any" value="1" required /></div><div class="field"><label for="viIsobaric">Volumen inicial (L)</label><input id="viIsobaric" type="number" min="0.001" step="any" value="10" required /></div><div class="field"><label for="vfIsobaric">Volumen final (L)</label><input id="vfIsobaric" type="number" min="0.001" step="any" value="20" required /></div><div class="field"><label for="tiIsobaric">Temperatura inicial (K)</label><input id="tiIsobaric" type="number" min="0.001" step="any" value="300" required /></div><div class="field"><label for="tfIsobaric">Temperatura final (K)</label><input id="tfIsobaric" type="number" min="0.001" step="any" value="600" required /></div></div><div class="formula">w_pres = 0<br />w_vol = −P · (Vf − Vi) · 101.325<br />Δu = n · Cv · (Tf − Ti) · Δh = n · Cp · (Tf − Ti) · q = Δh</div><div class="button-row"><button class="btn btn-primary" type="submit">Calcular isobárico</button><button class="btn btn-outline" type="button" onclick="reiniciarIsobarico()">Reiniciar</button></div></form>
-        <div class="visual-card"><div class="card"><h4>Resultados e interpretación</h4><div class="result-grid"><div class="result-tile blue"><span>w_pres</span><strong id="isobaricWpres">--</strong></div><div class="result-tile purple"><span>w_vol</span><strong id="isobaricWvol">--</strong></div><div class="result-tile"><span>Δu</span><strong id="isobaricDU">--</strong></div><div class="result-tile"><span>Δh</span><strong id="isobaricDH">--</strong></div><div class="result-tile good"><span>q</span><strong id="isobaricQ">--</strong></div><div class="result-tile orange"><span>ΔV</span><strong id="isobaricDV">--</strong></div></div><div class="interpretation" style="margin-top: 14px;" id="isobaricInterpretacion">Calcula para ver qué implica cada resultado.</div></div><div class="canvas-wrap"><canvas id="isobaricCanvas" width="820" height="430" aria-label="Gráfica P-V isobárica"></canvas></div><div class="card" id="reporte"><h4>Guardar resultados</h4><div class="form-grid"><div class="field"><label for="estudiante">Nombre del estudiante</label><input id="estudiante" type="text" placeholder="Escribe tu nombre" /></div><div class="field" style="display:flex; align-items:flex-end;"><button class="btn btn-primary" type="button" style="width:100%;" onclick="imprimirReporte()">Imprimir / guardar PDF</button></div></div></div></div>
+        <form class="card" id="isobaricForm"><h4>Datos de entrada</h4><div class="form-grid"><div class="field"><label for="gasIsobaric">Tipo de gas</label><select id="gasIsobaric"></select></div><div class="field"><label for="nIsobaric">Moles (n)</label><input id="nIsobaric" type="number" min="0.001" step="any" value="1" required /></div><div class="field"><label for="cvIsobaric">Cv (J/mol·K)</label><input id="cvIsobaric" type="number" readonly /></div><div class="field"><label for="cpIsobaric">Cp (J/mol·K)</label><input id="cpIsobaric" type="number" readonly /></div><div class="field"><label for="pIsobaric">Presión constante (atm)</label><input id="pIsobaric" type="number" min="0.001" step="any" value="1" required /></div><div class="field"><label for="viIsobaric">Volumen inicial (L)</label><input id="viIsobaric" type="number" min="0.001" step="any" value="10" required /></div><div class="field"><label for="vfIsobaric">Volumen final (L)</label><input id="vfIsobaric" type="number" min="0.001" step="any" value="20" required /></div><div class="field"><label for="tiIsobaric">Temperatura inicial (K)</label><input id="tiIsobaric" type="number" min="0.001" step="any" value="300" required /></div><div class="field"><label for="tfIsobaric">Temperatura final (K)</label><input id="tfIsobaric" type="number" min="0.001" step="any" value="600" required /></div></div><div class="formula">w_pres = 0<br />w_vol = −P · (Vf − Vi) · 101.325<br />ΔU = n · Cv · (Tf − Ti) · ΔH = n · Cp · (Tf − Ti) · q = ΔH</div><div class="button-row"><button class="btn btn-primary" type="submit">Calcular isobárico</button><button class="btn btn-outline" type="button" onclick="reiniciarIsobarico()">Reiniciar</button></div></form>
+        <div class="visual-card"><div class="card"><h4>Resultados e interpretación</h4><div class="result-grid"><div class="result-tile blue"><span>w_pres</span><strong id="isobaricWpres">--</strong></div><div class="result-tile purple"><span>w_vol</span><strong id="isobaricWvol">--</strong></div><div class="result-tile"><span>ΔU</span><strong id="isobaricDU">--</strong></div><div class="result-tile"><span>ΔH</span><strong id="isobaricDH">--</strong></div><div class="result-tile good"><span>q</span><strong id="isobaricQ">--</strong></div><div class="result-tile orange"><span>ΔV</span><strong id="isobaricDV">--</strong></div></div><div class="interpretation" style="margin-top: 14px;" id="isobaricInterpretacion">Calcula para ver qué implica cada resultado.</div></div><div class="canvas-wrap"><canvas id="isobaricCanvas" width="820" height="430" aria-label="Gráfica P-V isobárica"></canvas></div><div class="card" id="reporte"><h4>Guardar resultados</h4><div class="form-grid"><div class="field"><label for="estudiante">Nombre del estudiante</label><input id="estudiante" type="text" placeholder="Escribe tu nombre" /></div><div class="field" style="display:flex; align-items:flex-end;"><button class="btn btn-primary" type="button" style="width:100%;" onclick="imprimirReporte()">Imprimir / guardar PDF</button></div></div></div></div>
       </div>
     </section>
   </main>
@@ -374,9 +354,9 @@
     const R_J = 8.314462618;
     const L_ATM_TO_J = 101.325;
 
-    const materiales = { Aluminio: 900, Cobre: 386, Hierro: 452, Oro: 126, Plata: 233, Zinc: 388, Carbono: 710, Azufre: 710, Fosforo: 769, Yodo: 145 };
-    const simbolosMateriales = { Aluminio: 'Al', Cobre: 'Cu', Hierro: 'Fe', Oro: 'Au', Plata: 'Ag', Zinc: 'Zn', Carbono: 'C', Azufre: 'S', Fosforo: 'P', Yodo: 'I' };
-    const coloresMateriales = { Aluminio: ['#e2e8f0', '#94a3b8'], Cobre: ['#f59e0b', '#b45309'], Hierro: ['#cbd5e1', '#64748b'], Oro: ['#fef08a', '#eab308'], Plata: ['#f8fafc', '#94a3b8'], Zinc: ['#dbeafe', '#60a5fa'], Carbono: ['#9ca3af', '#1f2937'], Azufre: ['#fde047', '#ca8a04'], Fosforo: ['#fdba74', '#ea580c'], Yodo: ['#c4b5fd', '#6d28d9'] };
+    const materiales = { Aluminio: 900, Cobre: 386, Hierro: 452, Oro: 126, Plata: 233, Zinc: 388, Carbono: 710, Azufre: 710, Fosforo: 769, Yodo: 145, Personalizado: 500 };
+    const simbolosMateriales = { Aluminio: 'Al', Cobre: 'Cu', Hierro: 'Fe', Oro: 'Au', Plata: 'Ag', Zinc: 'Zn', Carbono: 'C', Azufre: 'S', Fosforo: 'P', Yodo: 'I', Personalizado: 'Cp' };
+    const coloresMateriales = { Aluminio: ['#e2e8f0', '#94a3b8'], Cobre: ['#f59e0b', '#b45309'], Hierro: ['#cbd5e1', '#64748b'], Oro: ['#fef08a', '#eab308'], Plata: ['#f8fafc', '#94a3b8'], Zinc: ['#dbeafe', '#60a5fa'], Carbono: ['#9ca3af', '#1f2937'], Azufre: ['#fde047', '#ca8a04'], Fosforo: ['#fdba74', '#ea580c'], Yodo: ['#c4b5fd', '#6d28d9'], Personalizado: ['#a7f3d0', '#059669'] };
 
     const gases = {
       monoatomico: { nombre: 'Gas monoatómico ideal', cv: 12.47, cp: 20.79 },
@@ -426,6 +406,7 @@
         const select = $(id);
         select.innerHTML = Object.entries(gases).map(([key, gas]) => `<option value="${key}">${gas.nombre}</option>`).join('');
       });
+      const tablaGases = $('tablaGases'); if (tablaGases) tablaGases.innerHTML = Object.entries(gases).map(([key, gas]) => `<tr><td>${gas.nombre}</td><td>${fmt(gas.cv, 'J/mol·K')}</td><td>${fmt(gas.cp, 'J/mol·K')}</td><td>${fmt(gas.cp / gas.cv, '', 3)}</td></tr>`).join('');
       actualizarGasAdiabatico(); actualizarGasIsocorico(); actualizarGasIsobarico();
     }
 
@@ -435,9 +416,9 @@
     function actualizarGasIsobarico() { const gas = gasSeleccionado('gasIsobaric'); $('cvIsobaric').value = gas.cv; $('cpIsobaric').value = gas.cp; }
 
     function generarSvgCalor(material, ti1, ti2, tf) {
-      const materialLimpio = material === 'Fosforo' ? 'Fósforo' : (material === 'Manual' ? 'Material M' : material);
-      const simbolo = material === 'Manual' ? 'M' : (simbolosMateriales[material] || materialLimpio.charAt(0).toUpperCase());
-      const paleta = coloresMateriales[material] || ['#94a3b8', '#475569'];
+      const materialLimpio = material === 'Fosforo' ? 'Fósforo' : material;
+      const simbolo = simbolosMateriales[material] || materialLimpio.charAt(0).toUpperCase();
+      const paleta = coloresMateriales[material] || ['#fde68a', '#f59e0b'];
       const tMat = Number.isFinite(ti1) ? `${ti1.toFixed(1)} °C` : '--';
       const tAgua = Number.isFinite(ti2) ? `${ti2.toFixed(1)} °C` : '--';
       const tFinal = Number.isFinite(tf) ? `${tf.toFixed(2)} °C` : 'Pendiente';
@@ -470,23 +451,25 @@
       const material = $('material').value;
       const ti1 = parseFloat($('tempMaterial').value);
       const ti2 = parseFloat($('tempAgua').value);
-      const nombre = material === 'Fosforo' ? 'Fósforo' : (material === 'Manual' ? 'Material M' : material);
-      const simbolo = material === 'Manual' ? 'M' : (simbolosMateriales[material] || nombre.charAt(0).toUpperCase());
+      const nombre = material === 'Fosforo' ? 'Fósforo' : material;
+      const simbolo = simbolosMateriales[material] || nombre.charAt(0).toUpperCase();
       $('calorImage').src = generarSvgCalor(material, ti1, ti2, tf);
       const textoFinal = Number.isFinite(tf) ? ` Temperatura de equilibrio estimada: ${tf.toFixed(2)} °C.` : ' Presiona calcular para iniciar la simulación visual.';
       $('calorCaption').textContent = `Vista del experimento con ${nombre} (${simbolo}) y agua.${textoFinal}`;
     }
 
-    function actualizarMaterial() { 
-      const material = $('material').value; 
-      if (material === 'Manual') {
-        $('calorMaterial').readOnly = false;
-        if(!$('calorMaterial').value) $('calorMaterial').value = 1000;
+    function actualizarMaterial() {
+      const material = $('material').value;
+      const inputCp = $('calorMaterial');
+      if (material === 'Personalizado') {
+        inputCp.readOnly = false;
+        if (!Number.isFinite(parseFloat(inputCp.value)) || inputCp.value === '') inputCp.value = materiales.Personalizado;
+        inputCp.focus();
       } else {
-        $('calorMaterial').readOnly = true;
-        $('calorMaterial').value = materiales[material]; 
+        inputCp.readOnly = true;
+        inputCp.value = materiales[material];
       }
-      actualizarImagenCalorimetria(ultimoCalor && ultimoCalor.material === material ? ultimoCalor.tf : null); 
+      actualizarImagenCalorimetria(ultimoCalor && ultimoCalor.material === material ? ultimoCalor.tf : null);
     }
 
     function calcularCalorimetria() {
@@ -495,7 +478,7 @@
       const tf = (m1 * c1 * ti1 + m2 * c2 * ti2) / (m1 * c1 + m2 * c2);
       const q1 = m1 * c1 * (tf - ti1), q2 = m2 * c2 * (tf - ti2);
       setTile('calorTf', tf, '°C'); setTile('qMaterial', q1 / 1000, 'kJ'); setTile('qAgua', q2 / 1000, 'kJ'); setTile('dhMaterial', q1 / 1000, 'kJ'); setTile('dhAgua', q2 / 1000, 'kJ'); setTile('duMaterial', q1 / 1000, 'kJ'); setTile('duAgua', q2 / 1000, 'kJ'); setTile('tablaQMaterial', q1 / 1000, 'kJ'); setTile('tablaQAgua', q2 / 1000, 'kJ');
-      $('calorInterpretacion').innerHTML = `<strong>Análisis:</strong><ul><li><strong>Temperatura final:</strong> es el punto de equilibrio térmico; ambos cuerpos terminan a ${fmt(tf, '°C')}.</li><li><strong>q material:</strong> ${q1 < 0 ? 'negativo, por eso el material pierde calor.' : 'positivo, por eso el material gana calor.'}</li><li><strong>q agua:</strong> ${q2 > 0 ? 'positivo, por eso el agua absorbe calor.' : 'negativo, por eso el agua libera calor.'}</li><li><strong>Balance:</strong> la suma de calores tiende a cero porque se supone un sistema aislado.</li></ul>`;
+      $('calorInterpretacion').innerHTML = `<strong>Análisis:</strong><ul><li><strong>Temperatura final:</strong> es el punto de equilibrio térmico; ambos cuerpos terminan a ${fmt(tf, '°C')}.</li><li><strong>Q material:</strong> ${q1 < 0 ? 'negativo, por eso el material pierde calor.' : 'positivo, por eso el material gana calor.'}</li><li><strong>Q agua:</strong> ${q2 > 0 ? 'positivo, por eso el agua absorbe calor.' : 'negativo, por eso el agua libera calor.'}</li><li><strong>Balance:</strong> la suma de calores tiende a cero porque se supone un sistema aislado.</li></ul>`;
       ultimoCalor = { m1, ti1, m2, ti2, c1, c2, tf, q1, q2, material: $('material').value };
       actualizarImagenCalorimetria(tf); activarAnimacionCalorimetria(); return ultimoCalor;
     }
@@ -531,7 +514,7 @@
       const qRev = -wRev, qIrr = -wIrr, dU = 0, dH = 0;
       setTile('isoVi', Vi, 'L'); setTile('isoVf', Vf, 'L'); setTile('isoPi', Pi, 'atm'); setTile('isoPf', Pf, 'atm'); setTile('isoWrev', wRev, 'J'); setTile('isoWirr', wIrr, 'J'); setTile('wRevTable', wRev, 'J'); setTile('qRevTable', qRev, 'J'); setTile('wIrrTable', wIrr, 'J'); setTile('qIrrTable', qIrr, 'J'); setTile('isoDUrev', dU, 'J'); setTile('isoDHrev', dH, 'J'); setTile('isoDUirr', dU, 'J'); setTile('isoDHirr', dH, 'J');
       const movimiento = Vf > Vi ? 'expansión' : Vf < Vi ? 'compresión' : 'sin cambio de volumen';
-      $('isoInterpretacion').innerHTML = `<strong>Análisis del Proceso Isotérmico:</strong><ul><li><strong>Volumen:</strong> el sistema realiza una ${movimiento}; Vi=${fmt(Vi, 'L')} y Vf=${fmt(Vf, 'L')}.</li><li><strong>Trabajo reversible:</strong> ${signoEnergia(wRev)}; si es negativo, el sistema entrega trabajo al ambiente.</li><li><strong>Trabajo irreversible:</strong> usa la presión externa/final y la conversión 101.325 J por L·atm.</li><li><strong>Δu y Δh:</strong> son cero porque la temperatura permanece constante.</li><li><strong>q:</strong> compensa exactamente al trabajo para mantener constante la energía interna.</li></ul>`;
+      $('isoInterpretacion').innerHTML = `<strong>Análisis del Proceso Isotérmico:</strong><ul><li><strong>Volumen:</strong> el sistema realiza una ${movimiento}; Vi=${fmt(Vi, 'L')} y Vf=${fmt(Vf, 'L')}.</li><li><strong>Trabajo reversible:</strong> ${signoEnergia(wRev)}; si es negativo, el sistema entrega trabajo al ambiente.</li><li><strong>Trabajo irreversible:</strong> usa la presión externa/final y la conversión 101.325 J por L·atm.</li><li><strong>ΔU y ΔH:</strong> son cero porque la temperatura permanece constante.</li><li><strong>q:</strong> compensa exactamente al trabajo para mantener constante la energía interna.</li></ul>`;
       ultimoIso = { ...data, wRev, wIrr, qRev, qIrr, dU, dH }; dibujarIsotermico(ultimoIso); return ultimoIso;
     }
 
@@ -542,10 +525,10 @@
       const n = parseFloat($('molesAdi').value), Ti = parseFloat($('tempAdi').value), Pi = parseFloat($('piAdi').value), Vi = parseFloat($('viAdi').value), Vf = parseFloat($('vfAdi').value), cv = gas.cv, cp = gas.cp, gamma = cp / cv;
       if (!requirePositive([n, Ti, Pi, Vi, Vf, cv, cp]) || gamma <= 1) { alert('Revisa los datos adiabáticos.'); return null; }
       const Pf = Pi * Math.pow(Vi / Vf, gamma), Tf = Ti * Math.pow(Vi / Vf, gamma - 1);
-      const dU = n * cv * (Tf - Ti), dH = n * cp * (Tf - Ti), q = 0, wv = dU, wp = dH;
-      setTile('adiPf', Pf, 'atm'); setTile('adiTf', Tf, 'K'); setTile('adiW', wv, 'J'); setTile('adiWp', wp, 'J'); setTile('adiQ', q, 'J'); setTile('adiDU', dU, 'J'); setTile('adiDH', dH, 'J');
-      $('adiInterpretacion').innerHTML = `<strong>Análisis del Proceso Adiabático:</strong><ul><li><strong>q:</strong> vale 0 porque no hay transferencia de calor.</li><li><strong>Tf:</strong> ${Tf > Ti ? 'aumenta, indicando compresión y calentamiento.' : Tf < Ti ? 'disminuye, indicando expansión y enfriamiento.' : 'se mantiene igual.'}</li><li><strong>Δu:</strong> ${signoEnergia(dU)}; representa el cambio de energía interna y equivale al trabajo de volumen (wv).</li><li><strong>Δh:</strong> se calcula con Cp de la tabla y equivale al trabajo de presión (wp).</li><li><strong>wv y wp:</strong> calculados con el balance termodinámico correspondiente.</li></ul>`;
-      ultimoAdi = { n, Ti, Pi, Vi, Vf, gamma, cv, cp, Pf, Tf, dU, dH, wv, wp, q, gas: gas.nombre }; dibujarAdiabatico(ultimoAdi); return ultimoAdi;
+      const dU = n * cv * (Tf - Ti), dH = n * cp * (Tf - Ti), q = 0, wv = dU, wp = dH, w = wv;
+      setTile('adiPf', Pf, 'atm'); setTile('adiTf', Tf, 'K'); setTile('adiW', wv, 'J'); setTile('adiQ', q, 'J'); setTile('adiDU', dU, 'J'); setTile('adiDH', dH, 'J');
+      $('adiInterpretacion').innerHTML = `<strong>Análisis del Proceso Adiabático:</strong><ul><li><strong>q:</strong> vale 0 porque no hay transferencia de calor.</li><li><strong>Tf:</strong> ${Tf > Ti ? 'aumenta, indicando compresión y calentamiento.' : Tf < Ti ? 'disminuye, indicando expansión y enfriamiento.' : 'se mantiene igual.'}</li><li><strong>ΔU:</strong> ${signoEnergia(dU)}; representa el cambio de energía interna por variación de temperatura.</li><li><strong>ΔH:</strong> se calcula con Cp de la tabla y cambia junto con la temperatura.</li><li><strong>wv y wp:</strong> en este módulo ΔU = wv y ΔH = wp, usando Cv y Cp de la tabla.</li></ul>`;
+      ultimoAdi = { n, Ti, Pi, Vi, Vf, gamma, cv, cp, Pf, Tf, dU, dH, wv, wp, w, q, gas: gas.nombre }; dibujarAdiabatico(ultimoAdi); return ultimoAdi;
     }
 
     function usarDatosIsotermicos() { const data = ultimoIso || simularIsotermico() || obtenerDatosIso(); if (!data) return; $('molesAdi').value = data.n; $('tempAdi').value = data.T; $('piAdi').value = data.Pi.toFixed(3); $('viAdi').value = data.Vi.toFixed(3); $('vfAdi').value = data.Vf.toFixed(3); simularAdiabatico(); activarTab('adiabatico'); }
@@ -556,7 +539,7 @@
       if (!requirePositive([n, V, Pi, Pf, Ti, Tf, cv, cp])) { alert('Revisa los datos del proceso isocórico.'); return null; }
       const wVol = 0, wPres = V * (Pf - Pi) * L_ATM_TO_J, dU = n * cv * (Tf - Ti), dH = n * cp * (Tf - Ti), q = dU, dT = Tf - Ti;
       setTile('isochoricWvol', wVol, 'J'); setTile('isochoricWpres', wPres, 'J'); setTile('isochoricDU', dU, 'J'); setTile('isochoricDH', dH, 'J'); setTile('isochoricQ', q, 'J'); setTile('isochoricDT', dT, 'K');
-      $('isochoricInterpretacion').innerHTML = `<strong>Análisis del Proceso Isocórico:</strong> Al mantenerse el volumen rígidamente constante, el sistema no experimenta expansión ni compresión, por lo que el Trabajo de Volumen es cero (w_vol=0). Sin embargo, existe un Trabajo de Presión asociado al cambio de presión del gas. Todo el calor (q) transferido se convierte íntegramente en un cambio de la Energía Interna (Δu), modificando directamente la temperatura del sistema.<ul><li><strong>w_pres:</strong> ${signoEnergia(wPres)} porque la presión ${Pf > Pi ? 'aumenta' : Pf < Pi ? 'disminuye' : 'no cambia'}.</li><li><strong>Δu y q:</strong> tienen el mismo valor: ${fmt(q, 'J')}.</li><li><strong>Δh:</strong> mide el cambio energético a presión equivalente usando Cp.</li></ul>`;
+      $('isochoricInterpretacion').innerHTML = `<strong>Análisis del Proceso Isocórico:</strong> Al mantenerse el volumen rígidamente constante, el sistema no experimenta expansión ni compresión, por lo que el Trabajo de Volumen es cero (w_vol=0). Sin embargo, existe un Trabajo de Presión asociado al cambio de presión del gas. Todo el calor (q) transferido se convierte íntegramente en un cambio de la Energía Interna (ΔU), modificando directamente la temperatura del sistema.<ul><li><strong>w_pres:</strong> ${signoEnergia(wPres)} porque la presión ${Pf > Pi ? 'aumenta' : Pf < Pi ? 'disminuye' : 'no cambia'}.</li><li><strong>ΔU y q:</strong> tienen el mismo valor: ${fmt(q, 'J')}.</li><li><strong>ΔH:</strong> mide el cambio energético a presión equivalente usando Cp.</li></ul>`;
       ultimoIsocorico = { n, V, Pi, Pf, Ti, Tf, cv, cp, wVol, wPres, dU, dH, q, dT, gas: gas.nombre }; dibujarIsocorico(ultimoIsocorico); return ultimoIsocorico;
     }
 
@@ -566,7 +549,7 @@
       if (!requirePositive([n, P, Vi, Vf, Ti, Tf, cv, cp])) { alert('Revisa los datos del proceso isobárico.'); return null; }
       const wPres = 0, wVol = -P * (Vf - Vi) * L_ATM_TO_J, dU = n * cv * (Tf - Ti), dH = n * cp * (Tf - Ti), q = dH, dV = Vf - Vi;
       setTile('isobaricWpres', wPres, 'J'); setTile('isobaricWvol', wVol, 'J'); setTile('isobaricDU', dU, 'J'); setTile('isobaricDH', dH, 'J'); setTile('isobaricQ', q, 'J'); setTile('isobaricDV', dV, 'L');
-      $('isobaricInterpretacion').innerHTML = `<strong>Análisis del Proceso Isobárico:</strong> El sistema se expande o comprime manteniendo una presión constante. Como hay cambio de volumen, el sistema genera un Trabajo de Volumen (w_vol), cediendo o recibiendo energía del ambiente. En estas condiciones de presión fija, el calor transferido (q) es matemáticamente idéntico al cambio de Entalpía (Δh) del sistema.<ul><li><strong>w_vol:</strong> ${signoEnergia(wVol)}; ${dV > 0 ? 'es negativo porque el sistema se expande y entrega trabajo al ambiente.' : dV < 0 ? 'es positivo porque el ambiente comprime al sistema.' : 'es cero porque no cambió el volumen.'}</li><li><strong>q y Δh:</strong> tienen el mismo valor: ${fmt(q, 'J')}.</li><li><strong>Δu:</strong> depende de Cv y de la variación de temperatura.</li></ul>`;
+      $('isobaricInterpretacion').innerHTML = `<strong>Análisis del Proceso Isobárico:</strong> El sistema se expande o comprime manteniendo una presión constante. Como hay cambio de volumen, el sistema genera un Trabajo de Volumen (w_vol), cediendo o recibiendo energía del ambiente. En estas condiciones de presión fija, el calor transferido (q) es matemáticamente idéntico al cambio de Entalpía (ΔH) del sistema.<ul><li><strong>w_vol:</strong> ${signoEnergia(wVol)}; ${dV > 0 ? 'es negativo porque el sistema se expande y entrega trabajo al ambiente.' : dV < 0 ? 'es positivo porque el ambiente comprime al sistema.' : 'es cero porque no cambió el volumen.'}</li><li><strong>q y ΔH:</strong> tienen el mismo valor: ${fmt(q, 'J')}.</li><li><strong>ΔU:</strong> depende de Cv y de la variación de temperatura.</li></ul>`;
       ultimoIsobarico = { n, P, Vi, Vf, Ti, Tf, cv, cp, wPres, wVol, dU, dH, q, dV, gas: gas.nombre }; dibujarIsobarico(ultimoIsobarico); return ultimoIsobarico;
     }
 
@@ -586,41 +569,86 @@
 
     function drawLine(ctx, points, map, stroke, width = 3, dash = []) { if (points.length < 2) return; ctx.save(); ctx.strokeStyle = stroke; ctx.lineWidth = width; ctx.setLineDash(dash); ctx.beginPath(); points.forEach((p, index) => { const m = map(p); if (index === 0) ctx.moveTo(m.x, m.y); else ctx.lineTo(m.x, m.y); }); ctx.stroke(); ctx.restore(); }
     function drawPoint(ctx, point, map, fill, label) { const p = map(point); ctx.fillStyle = fill; ctx.beginPath(); ctx.arc(p.x, p.y, 6, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#0f172a'; ctx.font = '800 12px Segoe UI, Arial'; ctx.fillText(label, p.x + 9, p.y - 9); }
-    function drawLegend(ctx, items, x, y) { ctx.font = '800 12px Segoe UI, Arial'; items.forEach((item, index) => { const yy = y + index * 20; if(item.color.startsWith('rgba')){ ctx.fillStyle = item.color; ctx.fillRect(x, yy-6, 24, 12); } else { ctx.strokeStyle = item.color; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(x, yy); ctx.lineTo(x + 24, yy); ctx.stroke(); } ctx.fillStyle = '#334155'; ctx.fillText(item.text, x + 32, yy + 4); }); }
-
-    function dibujarIsotermico(data) { 
-      const { ctx, w, h } = getCanvasContext('isoCanvas'); 
-      const minV = Math.max(0.01, Math.min(data.Vi, data.Vf) * 0.65), maxV = Math.max(data.Vi, data.Vf) * 1.35, maxP = Math.max(data.Pi, data.Pf, data.n * R_ATM * data.T / minV) * 1.12; 
-      const { map } = dibujarBase(ctx, w, h, { xMin: 0, xMax: maxV, yMin: 0, yMax: maxP }, 'Diagrama P-V isotérmico'); 
-      
+    function drawLegend(ctx, items, x, y) { ctx.font = '800 12px Segoe UI, Arial'; items.forEach((item, index) => { const yy = y + index * 20; ctx.strokeStyle = item.color; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(x, yy); ctx.lineTo(x + 24, yy); ctx.stroke(); ctx.fillStyle = '#334155'; ctx.fillText(item.text, x + 32, yy + 4); }); }
+    function drawAreaUnderCurve(ctx, points, map, fill = 'rgba(14, 165, 233, 0.18)') {
+      if (points.length < 2) return;
       ctx.save();
-      ctx.fillStyle = 'rgba(14, 165, 233, 0.15)';
+      ctx.fillStyle = fill;
       ctx.beginPath();
-      const vStart = Math.min(data.Vi, data.Vf);
-      const vEnd = Math.max(data.Vi, data.Vf);
-      const startPt = map({x: vStart, y: 0});
-      ctx.moveTo(startPt.x, startPt.y);
-      for (let i = 0; i <= 100; i++) {
-         const V = vStart + (vEnd - vStart) * (i / 100);
-         const pt = map({x: V, y: data.n * R_ATM * data.T / V});
-         ctx.lineTo(pt.x, pt.y);
-      }
-      const endPt = map({x: vEnd, y: 0});
-      ctx.lineTo(endPt.x, endPt.y);
+      let base = map({ x: points[0].x, y: 0 });
+      ctx.moveTo(base.x, base.y);
+      points.forEach((point) => {
+        const p = map(point);
+        ctx.lineTo(p.x, p.y);
+      });
+      base = map({ x: points[points.length - 1].x, y: 0 });
+      ctx.lineTo(base.x, base.y);
       ctx.closePath();
       ctx.fill();
       ctx.restore();
-
-      const curva = []; 
-      for (let i = 0; i <= 160; i++) { const V = minV + (maxV - minV) * i / 160; curva.push({ x: V, y: data.n * R_ATM * data.T / V }); } 
-      drawLine(ctx, curva, map, '#0ea5e9', 3); 
-      drawLine(ctx, [{x: data.Vi, y: data.Pf}, {x: data.Vf, y: data.Pf}], map, '#f97316', 3, [8, 6]); 
-      drawLine(ctx, [{x: data.Vi, y: data.Pi}, {x: data.Vi, y: data.Pf}], map, '#f97316', 2, [4, 6]); 
-      drawPoint(ctx, {x: data.Vi, y: data.Pi}, map, '#22c55e', 'Inicial'); 
-      drawPoint(ctx, {x: data.Vf, y: data.Pf}, map, '#ef4444', 'Final'); 
-      drawLegend(ctx, [{ color: '#0ea5e9', text: 'Trayectoria reversible' }, { color: '#f97316', text: 'w irreversible a P externa' }, { color: 'rgba(14, 165, 233, 0.3)', text: 'Área bajo curva (w rev)' }], Math.max(74, w - 300), 40); 
     }
-    function dibujarAdiabatico(data) { const { ctx, w, h } = getCanvasContext('adiCanvas'); const minV = Math.max(0.01, Math.min(data.Vi, data.Vf) * 0.65), maxV = Math.max(data.Vi, data.Vf) * 1.35, K = data.Pi * Math.pow(data.Vi, data.gamma), maxP = Math.max(data.Pi, data.Pf, K / Math.pow(minV, data.gamma)) * 1.12; const { map } = dibujarBase(ctx, w, h, { xMin: 0, xMax: maxV, yMin: 0, yMax: maxP }, 'Diagrama P-V adiabático'); const curvaAdi = [], curvaIsoTi = []; for (let i = 0; i <= 160; i++) { const V = minV + (maxV - minV) * i / 160; curvaAdi.push({ x: V, y: K / Math.pow(V, data.gamma) }); curvaIsoTi.push({ x: V, y: data.n * R_ATM * data.Ti / V }); } drawLine(ctx, curvaAdi, map, '#7c3aed', 3); drawLine(ctx, curvaIsoTi, map, '#0ea5e9', 2, [7, 5]); drawPoint(ctx, {x: data.Vi, y: data.Pi}, map, '#22c55e', 'Inicial'); drawPoint(ctx, {x: data.Vf, y: data.Pf}, map, '#ef4444', 'Final'); drawLegend(ctx, [{ color: '#7c3aed', text: 'Adiabática reversible' }, { color: '#0ea5e9', text: 'Isoterma inicial' }], Math.max(74, w - 310), 58); }
+    function drawAreaLabel(ctx, text, x, y) {
+      ctx.save();
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.82)';
+      ctx.strokeStyle = 'rgba(255,255,255,0.95)';
+      ctx.lineWidth = 3;
+      ctx.font = '800 12px Segoe UI, Arial';
+      ctx.strokeText(text, x, y);
+      ctx.fillText(text, x, y);
+      ctx.restore();
+    }
+
+    function dibujarIsotermico(data) {
+      const { ctx, w, h } = getCanvasContext('isoCanvas');
+      const minV = Math.max(0.01, Math.min(data.Vi, data.Vf) * 0.65);
+      const maxV = Math.max(data.Vi, data.Vf) * 1.35;
+      const maxP = Math.max(data.Pi, data.Pf, data.n * R_ATM * data.T / minV) * 1.12;
+      const { map } = dibujarBase(ctx, w, h, { xMin: 0, xMax: maxV, yMin: 0, yMax: maxP }, 'Diagrama P-V isotérmico');
+      const curva = [], areaRev = [];
+      const a = Math.min(data.Vi, data.Vf), b = Math.max(data.Vi, data.Vf);
+      for (let i = 0; i <= 160; i++) {
+        const V = minV + (maxV - minV) * i / 160;
+        curva.push({ x: V, y: data.n * R_ATM * data.T / V });
+        const Vr = a + (b - a) * i / 160;
+        areaRev.push({ x: Vr, y: data.n * R_ATM * data.T / Vr });
+      }
+      drawAreaUnderCurve(ctx, areaRev, map, 'rgba(14, 165, 233, 0.20)');
+      drawLine(ctx, curva, map, '#0ea5e9', 3);
+      drawLine(ctx, [{x: data.Vi, y: data.Pf}, {x: data.Vf, y: data.Pf}], map, '#f97316', 3, [8, 6]);
+      drawLine(ctx, [{x: data.Vi, y: data.Pi}, {x: data.Vi, y: data.Pf}], map, '#f97316', 2, [4, 6]);
+      drawPoint(ctx, {x: data.Vi, y: data.Pi}, map, '#22c55e', 'Inicial');
+      drawPoint(ctx, {x: data.Vf, y: data.Pf}, map, '#ef4444', 'Final');
+      const labelPoint = map({ x: (a + b) / 2, y: data.n * R_ATM * data.T / ((a + b) / 2) });
+      drawAreaLabel(ctx, `Área = |w rev| = ${Math.abs(data.wRev).toFixed(2)} J`, labelPoint.x - 65, Math.min(labelPoint.y + 36, h - 66));
+      drawLegend(ctx, [{ color: '#0ea5e9', text: 'Trayectoria reversible' }, { color: '#f97316', text: 'Trabajo irreversible a P externa' }, { color: 'rgba(14,165,233,0.45)', text: 'Área bajo curva = |w rev|' }], Math.max(74, w - 320), 58);
+    }
+
+    function dibujarAdiabatico(data) {
+      const { ctx, w, h } = getCanvasContext('adiCanvas');
+      const minV = Math.max(0.01, Math.min(data.Vi, data.Vf) * 0.65);
+      const maxV = Math.max(data.Vi, data.Vf) * 1.35;
+      const K = data.Pi * Math.pow(data.Vi, data.gamma);
+      const maxP = Math.max(data.Pi, data.Pf, K / Math.pow(minV, data.gamma)) * 1.12;
+      const { map } = dibujarBase(ctx, w, h, { xMin: 0, xMax: maxV, yMin: 0, yMax: maxP }, 'Diagrama P-V adiabático');
+      const curvaAdi = [], curvaIsoTi = [], areaRev = [];
+      const a = Math.min(data.Vi, data.Vf), b = Math.max(data.Vi, data.Vf);
+      for (let i = 0; i <= 160; i++) {
+        const V = minV + (maxV - minV) * i / 160;
+        curvaAdi.push({ x: V, y: K / Math.pow(V, data.gamma) });
+        curvaIsoTi.push({ x: V, y: data.n * R_ATM * data.Ti / V });
+        const Vr = a + (b - a) * i / 160;
+        areaRev.push({ x: Vr, y: K / Math.pow(Vr, data.gamma) });
+      }
+      drawAreaUnderCurve(ctx, areaRev, map, 'rgba(124, 58, 237, 0.18)');
+      drawLine(ctx, curvaAdi, map, '#7c3aed', 3);
+      drawLine(ctx, curvaIsoTi, map, '#0ea5e9', 2, [7, 5]);
+      drawPoint(ctx, {x: data.Vi, y: data.Pi}, map, '#22c55e', 'Inicial');
+      drawPoint(ctx, {x: data.Vf, y: data.Pf}, map, '#ef4444', 'Final');
+      const labelPoint = map({ x: (a + b) / 2, y: K / Math.pow((a + b) / 2, data.gamma) });
+      drawAreaLabel(ctx, `Área = |wv| = ${Math.abs(data.wv ?? data.w).toFixed(2)} J`, labelPoint.x - 55, Math.min(labelPoint.y + 36, h - 66));
+      drawLegend(ctx, [{ color: '#7c3aed', text: 'Adiabática reversible' }, { color: '#0ea5e9', text: 'Isoterma inicial' }, { color: 'rgba(124,58,237,0.45)', text: 'Área bajo curva = |wv|' }], Math.max(74, w - 310), 58);
+    }
+
     function dibujarIsocorico(data) {
       const { ctx, w, h } = getCanvasContext('isochoricCanvas');
       const maxV = Math.max(data.V * 1.9, 2);
@@ -631,12 +659,13 @@
       drawLine(ctx, [{ x: 0, y: data.Pf }, { x: data.V, y: data.Pf }], map, '#94a3b8', 2, [5, 5]);
       drawPoint(ctx, { x: data.V, y: data.Pi }, map, '#22c55e', 'Inicial');
       drawPoint(ctx, { x: data.V, y: data.Pf }, map, '#ef4444', 'Final');
-      drawLegend(ctx, [{ color: '#8b5cf6', text: 'Volumen constante' }, { color: '#94a3b8', text: 'Guías de presión' }], Math.max(74, w - 280), 58);
+      drawLegend(ctx, [{ color: '#8b5cf6', text: 'Volumen constante' }, { color: '#94a3b8', text: 'Área de w_vol = 0' }], Math.max(74, w - 280), 58);
       ctx.save();
       ctx.fillStyle = '#334155';
       ctx.font = '700 12px Segoe UI, Arial';
       const pos = map({ x: data.V, y: (data.Pi + data.Pf) / 2 });
       ctx.fillText(`V = ${data.V.toFixed(2)} L`, pos.x + 10, pos.y + 18);
+      drawAreaLabel(ctx, 'Área bajo curva = 0 J', pos.x + 10, Math.min(pos.y + 40, h - 64));
       ctx.restore();
     }
 
@@ -645,17 +674,20 @@
       const maxV = Math.max(data.Vi, data.Vf) * 1.35;
       const maxP = Math.max(data.P, 1) * 1.35;
       const { map } = dibujarBase(ctx, w, h, { xMin: 0, xMax: maxV, yMin: 0, yMax: maxP }, 'Diagrama P-V isobárico');
+      const a = Math.min(data.Vi, data.Vf), b = Math.max(data.Vi, data.Vf);
+      drawAreaUnderCurve(ctx, [{ x: a, y: data.P }, { x: b, y: data.P }], map, 'rgba(249, 115, 22, 0.20)');
       drawLine(ctx, [{ x: data.Vi, y: data.P }, { x: data.Vf, y: data.P }], map, '#f97316', 4);
       drawLine(ctx, [{ x: data.Vi, y: 0 }, { x: data.Vi, y: data.P }], map, '#94a3b8', 2, [5, 5]);
       drawLine(ctx, [{ x: data.Vf, y: 0 }, { x: data.Vf, y: data.P }], map, '#94a3b8', 2, [5, 5]);
       drawPoint(ctx, { x: data.Vi, y: data.P }, map, '#22c55e', 'Inicial');
       drawPoint(ctx, { x: data.Vf, y: data.P }, map, '#ef4444', 'Final');
-      drawLegend(ctx, [{ color: '#f97316', text: 'Presión constante' }, { color: '#94a3b8', text: 'Guías de volumen' }], Math.max(74, w - 280), 58);
+      drawLegend(ctx, [{ color: '#f97316', text: 'Presión constante' }, { color: '#94a3b8', text: 'Guías de volumen' }, { color: 'rgba(249,115,22,0.45)', text: 'Área bajo curva = |w_vol|' }], Math.max(74, w - 305), 58);
       ctx.save();
       ctx.fillStyle = '#334155';
       ctx.font = '700 12px Segoe UI, Arial';
       const pos = map({ x: (data.Vi + data.Vf) / 2, y: data.P });
       ctx.fillText(`P = ${data.P.toFixed(2)} atm`, pos.x + 10, pos.y - 12);
+      drawAreaLabel(ctx, `Área = |w_vol| = ${Math.abs(data.wVol).toFixed(2)} J`, pos.x - 70, Math.min(pos.y + 42, h - 64));
       ctx.restore();
     }
 
@@ -664,12 +696,13 @@
     function imprimirReporte() {
       const cal = ultimoCalor || calcularCalorimetria(); const iso = ultimoIso || simularIsotermico(); const adi = ultimoAdi || simularAdiabatico(); const ico = ultimoIsocorico || calcularIsocorico(); const iba = ultimoIsobarico || calcularIsobarico();
       const estudiante = $('estudiante').value.trim() || 'Sin nombre'; const fecha = new Date().toLocaleString('es-EC');
-      const html = `<html lang="es"><head><meta charset="UTF-8" /><title>Reporte de Fisicoquímica</title><style>body{font-family:Arial,sans-serif;color:#111827;padding:28px}h1{color:#0369a1;margin-bottom:0}h2{border-bottom:2px solid #e5e7eb;padding-bottom:6px;margin-top:28px}table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid #d1d5db;padding:9px;text-align:left}th{background:#f3f4f6}.meta{color:#4b5563}</style></head><body><h1>Reporte de Laboratorio Virtual de Fisicoquímica</h1><p class="meta"><b>Estudiante:</b> ${estudiante}<br><b>Fecha:</b> ${fecha}</p><h2>Calorimetría</h2><table><tr><th>Material</th><td>${cal.material}</td></tr><tr><th>Temperatura de equilibrio</th><td>${fmt(cal.tf, '°C')}</td></tr><tr><th>q material</th><td>${fmt(cal.q1 / 1000, 'kJ')}</td></tr><tr><th>q agua</th><td>${fmt(cal.q2 / 1000, 'kJ')}</td></tr></table><h2>Proceso isotérmico</h2><table><tr><th>Pi</th><td>${fmt(iso.Pi, 'atm')}</td><th>Pf</th><td>${fmt(iso.Pf, 'atm')}</td></tr><tr><th>Vi</th><td>${fmt(iso.Vi, 'L')}</td><th>Vf</th><td>${fmt(iso.Vf, 'L')}</td></tr><tr><th>w rev</th><td>${fmt(iso.wRev, 'J')}</td><th>q rev</th><td>${fmt(iso.qRev, 'J')}</td></tr><tr><th>Δu</th><td>0.00 J</td><th>Δh</th><td>0.00 J</td></tr></table><h2>Proceso adiabático</h2><table><tr><th>Gas</th><td>${adi.gas}</td><th>q</th><td>${fmt(adi.q, 'J')}</td></tr><tr><th>Pf</th><td>${fmt(adi.Pf, 'atm')}</td><th>Tf</th><td>${fmt(adi.Tf, 'K')}</td></tr><tr><th>wv</th><td>${fmt(adi.wv, 'J')}</td><th>Δu</th><td>${fmt(adi.dU, 'J')}</td></tr><tr><th>wp</th><td>${fmt(adi.wp, 'J')}</td><th>Δh</th><td>${fmt(adi.dH, 'J')}</td></tr></table><h2>Proceso isocórico</h2><table><tr><th>w_vol</th><td>${fmt(ico.wVol, 'J')}</td><th>w_pres</th><td>${fmt(ico.wPres, 'J')}</td></tr><tr><th>Δu</th><td>${fmt(ico.dU, 'J')}</td><th>Δh</th><td>${fmt(ico.dH, 'J')}</td></tr><tr><th>q</th><td>${fmt(ico.q, 'J')}</td><th>ΔT</th><td>${fmt(ico.dT, 'K')}</td></tr></table><h2>Proceso isobárico</h2><table><tr><th>w_pres</th><td>${fmt(iba.wPres, 'J')}</td><th>w_vol</th><td>${fmt(iba.wVol, 'J')}</td></tr><tr><th>Δu</th><td>${fmt(iba.dU, 'J')}</td><th>Δh</th><td>${fmt(iba.dH, 'J')}</td></tr><tr><th>q</th><td>${fmt(iba.q, 'J')}</td><th>ΔV</th><td>${fmt(iba.dV, 'L')}</td></tr></table></body></html>`;
+      const html = `<html lang="es"><head><meta charset="UTF-8" /><title>Reporte de Fisicoquímica</title><style>body{font-family:Arial,sans-serif;color:#111827;padding:28px}h1{color:#0369a1;margin-bottom:0}h2{border-bottom:2px solid #e5e7eb;padding-bottom:6px;margin-top:28px}table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid #d1d5db;padding:9px;text-align:left}th{background:#f3f4f6}.meta{color:#4b5563}</style></head><body><h1>Reporte de Laboratorio Virtual de Fisicoquímica</h1><p class="meta"><b>Estudiante:</b> ${estudiante}<br><b>Fecha:</b> ${fecha}</p><h2>Calorimetría</h2><table><tr><th>Material</th><td>${cal.material}</td></tr><tr><th>Temperatura de equilibrio</th><td>${fmt(cal.tf, '°C')}</td></tr><tr><th>q material</th><td>${fmt(cal.q1 / 1000, 'kJ')}</td></tr><tr><th>q agua</th><td>${fmt(cal.q2 / 1000, 'kJ')}</td></tr></table><h2>Proceso isotérmico</h2><table><tr><th>Pi</th><td>${fmt(iso.Pi, 'atm')}</td><th>Pf</th><td>${fmt(iso.Pf, 'atm')}</td></tr><tr><th>Vi</th><td>${fmt(iso.Vi, 'L')}</td><th>Vf</th><td>${fmt(iso.Vf, 'L')}</td></tr><tr><th>w rev</th><td>${fmt(iso.wRev, 'J')}</td><th>q rev</th><td>${fmt(iso.qRev, 'J')}</td></tr><tr><th>ΔU</th><td>0.00 J</td><th>ΔH</th><td>0.00 J</td></tr></table><h2>Proceso adiabático</h2><table><tr><th>Gas</th><td>${adi.gas}</td><th>q</th><td>${fmt(adi.q, 'J')}</td></tr><tr><th>Pf</th><td>${fmt(adi.Pf, 'atm')}</td><th>Tf</th><td>${fmt(adi.Tf, 'K')}</td></tr><tr><th>wv</th><td>${fmt(adi.wv ?? adi.w, 'J')}</td><th>ΔU = wv</th><td>${fmt(adi.dU, 'J')}</td></tr><tr><th>ΔH = wp</th><td>${fmt(adi.dH, 'J')}</td><th>γ</th><td>${fmt(adi.gamma, '', 3)}</td></tr></table><h2>Proceso isocórico</h2><table><tr><th>w_vol</th><td>${fmt(ico.wVol, 'J')}</td><th>w_pres</th><td>${fmt(ico.wPres, 'J')}</td></tr><tr><th>ΔU</th><td>${fmt(ico.dU, 'J')}</td><th>ΔH</th><td>${fmt(ico.dH, 'J')}</td></tr><tr><th>q</th><td>${fmt(ico.q, 'J')}</td><th>ΔT</th><td>${fmt(ico.dT, 'K')}</td></tr></table><h2>Proceso isobárico</h2><table><tr><th>w_pres</th><td>${fmt(iba.wPres, 'J')}</td><th>w_vol</th><td>${fmt(iba.wVol, 'J')}</td></tr><tr><th>ΔU</th><td>${fmt(iba.dU, 'J')}</td><th>ΔH</th><td>${fmt(iba.dH, 'J')}</td></tr><tr><th>q</th><td>${fmt(iba.q, 'J')}</td><th>ΔV</th><td>${fmt(iba.dV, 'L')}</td></tr></table></body></html>`;
       const win = window.open('', '_blank'); win.document.write(html); win.document.close(); win.focus(); win.print();
     }
 
     ['tipoEntrada', 'molesIso', 'tempIso', 'piIso', 'pfIso', 'viIso', 'vfIso'].forEach((id) => { $(id).addEventListener('input', sincronizarIso); $(id).addEventListener('change', id === 'tipoEntrada' ? actualizarEntradaIso : sincronizarIso); });
     $('material').addEventListener('change', actualizarMaterial);
+    $('calorMaterial').addEventListener('input', () => { if ($('material').value === 'Personalizado') actualizarImagenCalorimetria(ultimoCalor && ultimoCalor.material === 'Personalizado' ? ultimoCalor.tf : null); });
     $('gasAdi').addEventListener('change', () => { actualizarGasAdiabatico(); simularAdiabatico(); });
     $('gasIsochoric').addEventListener('change', () => { actualizarGasIsocorico(); calcularIsocorico(); });
     $('gasIsobaric').addEventListener('change', () => { actualizarGasIsobarico(); calcularIsobarico(); });
