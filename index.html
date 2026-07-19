@@ -627,6 +627,15 @@
         const Vr = a + (b - a) * i / 160;
         areaRev.push({ x: Vr, y: data.n * R_ATM * data.T / Vr });
       }
+
+      // NUEVO CÓDIGO
+      const areaIrr = [
+        { x: a, y: data.Pf },
+        { x: b, y: data.Pf }
+      ];
+      drawAreaUnderCurve(ctx, areaIrr, map, 'rgba(249, 115, 22, 0.15)');
+      // FIN NUEVO CÓDIGO
+
       drawAreaUnderCurve(ctx, areaRev, map, 'rgba(14, 165, 233, 0.20)');
       drawLine(ctx, curva, map, '#0ea5e9', 3);
       drawLine(ctx, [{x: data.Vi, y: data.Pf}, {x: data.Vf, y: data.Pf}], map, '#f97316', 3, [8, 6]);
@@ -635,7 +644,14 @@
       drawPoint(ctx, {x: data.Vf, y: data.Pf}, map, '#ef4444', 'Final');
       const labelPoint = map({ x: (a + b) / 2, y: data.n * R_ATM * data.T / ((a + b) / 2) });
       drawAreaLabel(ctx, `Área = |w rev| = ${Math.abs(data.wRev).toFixed(2)} J`, labelPoint.x - 65, Math.min(labelPoint.y + 36, h - 66));
-      drawLegend(ctx, [{ color: '#0ea5e9', text: 'Trayectoria reversible' }, { color: '#f97316', text: 'Trabajo irreversible a P externa' }, { color: 'rgba(14,165,233,0.45)', text: 'Área bajo curva = |w rev|' }], Math.max(74, w - 320), 58);
+      
+      // LEYENDA ACTUALIZADA
+      drawLegend(ctx, [
+        { color: '#0ea5e9', text: 'Trayectoria reversible' },
+        { color: '#f97316', text: 'Trabajo irreversible a P externa' },
+        { color: 'rgba(14,165,233,0.45)', text: 'Área = |w rev|' },
+        { color: 'rgba(249,115,22,0.45)', text: 'Área = |w irr|' }
+      ], Math.max(74, w - 320), 40); 
     }
 
     function dibujarAdiabatico(data) {
